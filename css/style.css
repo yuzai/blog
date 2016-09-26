@@ -19,3 +19,38 @@
 .welcome:hover{
   opacity: 0.8;
 }
+
+.out_phone{
+  float:right;
+  height:200px;
+  width:100px;
+  border:1px solid white;
+  border-radius:5%;
+  background:black;
+}
+.in_phone{
+  margin:10px auto;
+  height:90%;
+  width:80%;
+  background:white;
+}
+.pagination .p{
+  text-align:center;
+}
+.archive{
+  padding:1% 2%;
+}
+.archive .archive_item{
+  border-bottom: 1px dotted blue;
+  font-size:20px;
+}
+.archive .archive_item a{
+  text-decoration:none;
+}
+.archive .archive_item .date{
+  float:right;
+}
+.archive .pagination{
+  width:100%;
+  text-align: center;
+}
