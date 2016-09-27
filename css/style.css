@@ -54,3 +54,52 @@
   width:100%;
   text-align: center;
 }
+#my_picture{
+	border-radius: 100%;
+	display: block;
+	width:200px;
+  height:200px;
+	margin:1% auto;
+	background:url(../rs/m1.jpg) -174px -200px;
+}
+#aboutme{
+  list-style-type: none;
+    margin: 0;
+    padding: 1%;
+    text-align:center;
+    font-size:30px;
+}
+#aboutme li {
+    display:inline;
+}
+#aboutme li a{
+    display:inline-block;
+    width:30px;
+    height:30px;
+    text-decoration: none;
+    margin:1%;
+    color:grey;
+    opacity: 0.5;
+}
+#aboutme li a:hover{
+  color:#428bca;
+  opacity: 1;
+}
+#tags{
+  text-align: center;
+}
+#tags a{
+  border:1px solid black;
+  margin:1%;
+  background-color:white;
+  opacity: 0.5;
+}
+#tags a:hover{
+  color: #fff;
+  background-color: #428bca;
+  border-color: #357ebd;
+  opacity: 1;
+}
+p{
+  margin:0px;
+}
