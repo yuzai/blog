@@ -41,6 +41,7 @@
   padding:1% 2%;
 }
 .archive .archive_item{
+  margin-bottom: 2%;
   border-bottom: 1px dotted blue;
   font-size:20px;
 }
@@ -49,6 +50,7 @@
 }
 .archive .archive_item .date{
   float:right;
+  font-size:10px;
 }
 .archive .pagination{
   width:100%;
