@@ -57,10 +57,12 @@
         <div class = 'col-xs-8 col-xs-offset-1 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1'>
           <div class ='well'>
         <h1 class='post-title'>
-            <span>My blog is building....</span>
+            <span>hexo自己做主题（1） 关于hexo的一点疑问</span>
         </h1>
         <section class='post-content'>
-            <h4 id="一直想做个自己的博客"><a href="#一直想做个自己的博客" class="headerlink" title="一直想做个自己的博客"></a>一直想做个自己的博客</h4><p>最初是跟着github上的 <a href="http://www.baidu.com" target="_blank" rel="external">N-blog</a>项目在做博客，当时不会nodejs,不会express，不会数据库，不过教程很详细，里面看不懂的地方也直接抄代码。慢慢的就建起来了。不过看着那么几个ejs模板，还是觉得很难的。当时的基础实在是不行，现在也是个半吊子。总感觉大神好多。</p>
+            <h3 id="hexo变量的作用域"><a href="#hexo变量的作用域" class="headerlink" title="hexo变量的作用域"></a>hexo变量的作用域</h3><h4 id="问题：page变量在archive-ejs和post-ejs中的含义不同，不好在post页面访问整个博客的所有文章列表"><a href="#问题：page变量在archive-ejs和post-ejs中的含义不同，不好在post页面访问整个博客的所有文章列表" class="headerlink" title="问题：page变量在archive.ejs和post.ejs中的含义不同，不好在post页面访问整个博客的所有文章列表"></a>问题：page变量在archive.ejs和post.ejs中的含义不同，不好在post页面访问整个博客的所有文章列表</h4><p>根据手册，archive.ejs中的page表示的是所有的文章，也就是page.posts的元素就是每一篇文章。而在post.ejs中，也就是访问:year/:month…某篇文章时，page变量就是archive.ejs中的page.posts中对应于该文章的变量。<br>我希望实现的功能是在post.ejs中，也就是展示每篇文章的页面时，左侧显示文章，右侧显示toc,同时toc下面显示我发表过的文章。但是在post.ejs中并不能访问archive中page.posts变量，在post.ejs中，page就表示当前页面，page(in post.ejs)=page.post[index] (in archive.ejs)。所以不能访问到整个的博客文章变量，不好将其显示出来。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>变量是内部定义好的，框架这样安排是有它的道理的，这样，在post中可以很方便的处理当前文章的内容，而在archive中，可以直接对所有的文章进行相应的处理。在性能上应该有不少提升，很想知道内部的实现原理。不过要看源码了。暂时还是把自己的博客主题做好，不容易啊。</p>
+<h3 id="暂时的解决方案"><a href="#暂时的解决方案" class="headerlink" title="暂时的解决方案"></a>暂时的解决方案</h3><p>hexo提供的辅助函数（helpers）可以解决这个问题<br><code>&lt;%- list_archives([options]) %&gt;</code><br>  可以显示当前的列表，具体的参数设置可以查看手册<br>  <code>&lt;%- list_posts([options]) %&gt;</code>可以显示所有的文章，具体有个格式，索然可以通过更改options获得自己想要的格式，不过获取这个格式之后，可以自己添加js,css来实现想要的渲染效果。</p>
 
         </section>
           </div>
@@ -68,7 +70,7 @@
        <div class = 'col-xs-3 col-xs-offset-0 col-md-3 col-md-offset-0 col-sm-3 col-sm-offset-0 col-lg-3 col-lg-offset-0'>
        <div class = 'well'>
         <aside class='post-aside'>
-           <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一直想做个自己的博客"><span class="toc-text">一直想做个自己的博客</span></a></li></ol>
+           <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#hexo变量的作用域"><span class="toc-text">hexo变量的作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题：page变量在archive-ejs和post-ejs中的含义不同，不好在post页面访问整个博客的所有文章列表"><span class="toc-text">问题：page变量在archive.ejs和post.ejs中的含义不同，不好在post页面访问整个博客的所有文章列表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考"><span class="toc-text">思考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#暂时的解决方案"><span class="toc-text">暂时的解决方案</span></a></li></ol>
         </aside>
       </div>
       </div>
