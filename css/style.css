@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
 }
+body { padding-top: 70px; }
 .canvas{
   position:absolute;
   z-index:-1;
@@ -11,7 +12,7 @@
   bottom:0;
 }
 .welcome{
-  margin-top: 15%;
+  margin-top: 10%;
   margin-left:40%;
   width:50%;
   opacity: 0.3;
@@ -42,7 +43,7 @@
 }
 .archive .archive_item{
   margin-bottom: 2%;
-  border-bottom: 1px dotted blue;
+  border-bottom: 1px dotted #428bca;
   font-size:20px;
 }
 .archive .archive_item a{
@@ -104,4 +105,13 @@
 }
 p{
   margin:0px;
+}
+.myfoot p{
+  text-align: center;
+}
+.myfoot a{
+  text-decoration: none;
+  background:#428bca;
+  color:rgb(241,241,241);
+  font-size:20px;
 }
