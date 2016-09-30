@@ -44,7 +44,7 @@ body { padding-top: 70px; }
 .archive .archive_item{
   margin-bottom: 2%;
   border-bottom: 1px dotted #428bca;
-  font-size:20px;
+  font-size:15px;
 }
 .archive .archive_item a{
   text-decoration:none;
@@ -114,4 +114,11 @@ p{
   background:#428bca;
   color:rgb(241,241,241);
   font-size:20px;
+}
+.category-list{
+  list-style-type: none;
+  text-align:center;
+}
+.category-list li{
+  text-decoration: none;
 }
