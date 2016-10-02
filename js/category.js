@@ -13,3 +13,17 @@ button2.onclick = function(){
   document.getElementById('archive1').style.display= 'none';
   document.getElementById('archive2').style.display= ''
 }
+
+document.addEventListener('scroll',function(){
+var head = document.getElementById('daohang');
+  if(window.pageYOffset !== 0)
+      head.style.opacity = 1;
+  else {
+      head.style.opacity = 0.4;
+  }
+  if(window.pageYOffset >= 280)
+    $('#ab_ca').addClass('about_fix');
+  else {
+    $('#ab_ca').removeClass('about_fix');
+  }
+})
