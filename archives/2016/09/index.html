@@ -8,12 +8,15 @@
     <title>my blog</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/fontdiao.css">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <div class="main">
-        <header>
-  <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+        <div id = 'head'>
+</div>
+<header>
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 <div class="container-fluid">
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header">
@@ -23,15 +26,15 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="https://yuzai.github.io/myhomepage"><i class= 'icon-home'></i> Xiaobo Ma</a>
+    <a class="navbar-brand" href="https://yuzai.github.io/myhomepage"></i><i class= 'icon-home'></i> Xiaobo Ma</a>
   </div>
 
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav navbar-left">
     <li><a href="https://github.com/yuzai"><i class= 'icon-github'> Github</i></a></li>
-    <li><a href="/rs/wechat.jpg"> WeChat</a></li>
-    <li><a href="https://shop112051817.taobao.com/?spm=2013.1.1000126.d21.cwM4Hx"><i class= 'icon-shopping-cart'></i> Store</a></li>
+    <li><a href="/rs/wechat.jpg"><i class= 'icon-wechat'></i> WeChat</a></li>
+    <li><a href="https://shop112051817.taobao.com/?spm=2013.1.1000126.d21.cwM4Hx"><i class= 'icon-taobao'></i> Store</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       
@@ -50,20 +53,23 @@
 
 </header>
 
-<button id='but1'>目录视图</button>
-<button id='but2'>摘要视图</button>
-
+<div style = 'margin-top:160px'>
 <div class = 'container_fluid'>
   <div class = 'row'>
   <div class = 'col-xs-12 col-xs-offset-0 col-md-5 col-md-offset-2 col-sm-5 col-sm-offset-2 col-lg-5 col-lg-offset-2'>
     <div class = 'well'>
     <div class="archive">
+      <div style = 'text-align:right'>
+        <button type="button" class="btn btn-primary" id='but1'>目录视图</button>
+        <button type="button" class="btn btn-success" id='but2'>摘要视图</button>
+        <hr>
+      </div>
       <div id = archive1>
       
       
         
         
-          <hr>
+        
           <h2 class="year">2016</h2 >
           
         
@@ -73,7 +79,7 @@
           <a class="title" href="/2016/09/28/进度/" title = 'hexo主题制作笔记（2）：进展'>hexo主题制作笔记（2）：进展</a>
         </div>
         <div class = 'col-lg-4 col-sm-4 col-md-4 col-xs-4'>
-          <span class="date"><span class='glyphicon glyphicon-calendar'></span> 2016-09-28</span>
+          <span class="date"><i class='icon-calendar'></i> 2016-09-28</span>
             </div>
           </div>
         </div>
@@ -86,7 +92,7 @@
           <a class="title" href="/2016/09/28/关于hexo的一点疑问/" title = 'hexo做主题笔记（1） 关于hexo的一点疑问'>hexo做主题笔记（1） 关于hexo的一点疑问</a>
         </div>
         <div class = 'col-lg-4 col-sm-4 col-md-4 col-xs-4'>
-          <span class="date"><span class='glyphicon glyphicon-calendar'></span> 2016-09-28</span>
+          <span class="date"><i class='icon-calendar'></i> 2016-09-28</span>
             </div>
           </div>
         </div>
@@ -99,7 +105,7 @@
           <a class="title" href="/2016/09/26/My-blog-is-building/" title = 'My blog is building....'>My blog is building....</a>
         </div>
         <div class = 'col-lg-4 col-sm-4 col-md-4 col-xs-4'>
-          <span class="date"><span class='glyphicon glyphicon-calendar'></span> 2016-09-26</span>
+          <span class="date"><i class='icon-calendar'></i> 2016-09-26</span>
             </div>
           </div>
         </div>
@@ -112,7 +118,7 @@
           <a class="title" href="/2016/09/22/My-first-Post/" title = 'My first Post'>My first Post</a>
         </div>
         <div class = 'col-lg-4 col-sm-4 col-md-4 col-xs-4'>
-          <span class="date"><span class='glyphicon glyphicon-calendar'></span> 2016-09-22</span>
+          <span class="date"><i class='icon-calendar'></i> 2016-09-22</span>
             </div>
           </div>
         </div>
@@ -125,12 +131,14 @@
       
         
           <h4 class="post-title">
-            <i class="iconfont">&#xe609;</i>
+            <i class='icon-book'> </i>
             <a href="/2016/09/28/进度/">hexo主题制作笔记（2）：进展</a>
           </h4>
           
-      <h6 class="date"><i class="iconfont">&#xf0069;</i>2016-09-28</h6>
-      <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo主题制作/">hexo主题制作</a></li></ul>
+      <h6 class="date"><i class='icon-calendar'> </i>2016-09-28</h6>
+        <i class = 'icon-tag'></i>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">4</span></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo主题制作/">hexo主题制作</a></li></ul>
       <section class="md post-content">
           
               <h4 id="完成情况记录"><a href="#完成情况记录" class="headerlink" title="完成情况记录"></a>完成情况记录</h4><pre><code>1. index，是一个流星背景的欢迎页面，带有欢迎和一些我自己的个人链接
@@ -145,12 +153,14 @@
       
         
           <h4 class="post-title">
-            <i class="iconfont">&#xe609;</i>
+            <i class='icon-book'> </i>
             <a href="/2016/09/28/关于hexo的一点疑问/">hexo做主题笔记（1） 关于hexo的一点疑问</a>
           </h4>
           
-      <h6 class="date"><i class="iconfont">&#xf0069;</i>2016-09-28</h6>
-      <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo主题制作/">hexo主题制作</a></li></ul>
+      <h6 class="date"><i class='icon-calendar'> </i>2016-09-28</h6>
+        <i class = 'icon-tag'></i>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">4</span></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo主题制作/">hexo主题制作</a></li></ul>
       <section class="md post-content">
           
               <h3 id="hexo变量的作用域"><a href="#hexo变量的作用域" class="headerlink" title="hexo变量的作用域"></a>hexo变量的作用域</h3><h4 id="问题：page变量在archive-ejs和post-ejs中的含义不同，不好在post页面访问整个博客的所有文章列表"><a href="#问题：page变量在archive-ejs和post-ejs中的含义不同，不好在post页面访问整个博客的所有文章列表" class="headerlink" title="问题：page变量在archive.ejs和post.ejs中的含义不同，不好在post页面访问整个博客的所有文章列表"></a>问题：page变量在archive.ejs和post.ejs中的含义不同，不好在post页面访问整个博客的所有文章列表</h4>
@@ -163,12 +173,14 @@
       
         
           <h4 class="post-title">
-            <i class="iconfont">&#xe609;</i>
+            <i class='icon-book'> </i>
             <a href="/2016/09/26/My-blog-is-building/">My blog is building....</a>
           </h4>
           
-      <h6 class="date"><i class="iconfont">&#xf0069;</i>2016-09-26</h6>
-      <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+      <h6 class="date"><i class='icon-calendar'> </i>2016-09-26</h6>
+        <i class = 'icon-tag'></i>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">1</span></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
       <section class="md post-content">
           
               <h4 id="一直想做个自己的博客"><a href="#一直想做个自己的博客" class="headerlink" title="一直想做个自己的博客"></a>一直想做个自己的博客</h4><p>最初是跟着github上的 <a href="http://www.baidu.com">N-blog</a>项目在做博客，当时不会nodejs,不会express，不会数据库，不过教程很详细，里面看不懂的地方也直接抄代码。慢慢的就建起来了。<br>
@@ -181,12 +193,14 @@
       
         
           <h4 class="post-title">
-            <i class="iconfont">&#xe609;</i>
+            <i class='icon-book'> </i>
             <a href="/2016/09/22/My-first-Post/">My first Post</a>
           </h4>
           
-      <h6 class="date"><i class="iconfont">&#xf0069;</i>2016-09-22</h6>
-      <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo主题制作/">hexo主题制作</a></li></ul>
+      <h6 class="date"><i class='icon-calendar'> </i>2016-09-22</h6>
+        <i class = 'icon-tag'></i>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">4</span></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo主题制作/">hexo主题制作</a></li></ul>
       <section class="md post-content">
           
               <p>测试一下功能。<br>
@@ -207,10 +221,10 @@
   <img id = 'my_picture'>
   <p style='text-align:center;font-size:30px'>Xiaobo Ma</p>
   <ul id='aboutme'>
-    <li><a  title = 'blog' href= 'https://yuzai.github.io' role="button"><i class= 'icon-home'></i></a></li>
     <li><a  title = 'github' href="https://github.com/yuzai" role="button"><i class= 'icon-github'></i></a></li>
-    <li><a  title = 'twitter' href="#" role="button"><i class= 'icon-twitter'></i></a></li>
-    <li><a  title = 'my store'href="https://shop112051817.taobao.com/?spm=2013.1.1000126.d21.cwM4Hx" role="button"><i class= 'icon-shopping-cart'></i></a></li>
+    <li><a  title = 'blog' href= 'https://yuzai.github.io' role="button"><i class= 'icon-linkedin'></i></a></li>
+    <li><a  title = 'twitter' href="/rs/wechat.jpg" role="button"><i class= 'icon-wechat'></i></a></li>
+    <li><a  title = 'my store'href="https://shop112051817.taobao.com/?spm=2013.1.1000126.d21.cwM4Hx" role="button"><i class= 'icon-taobao'></i></a></li>
   </ul>
 
   
@@ -222,6 +236,7 @@
   </div>
 </div>
 
+</div>
 <footer class='myfoot'>
   <div class=" container-fluid" >
        <p><a href = 'https://github.com/yuzai'>Writer:Maxiaobo  <i class='icon-github'></i></a></p>
