@@ -161,11 +161,37 @@ header:hover{
 .main{
   font-family: myFirstFont,DFKai-SB;
 }
-#ab_cd{
+#ab_ca{
+  overflow:auto;
+  height:80%;
 }
 .about_fix
 {
   position:fixed;
   top:50px;
   z-index:1;
+}
+.tag-list{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.tag-list .tag-list-item{
+  float:left;
+}
+.tag-list .tag-list-item .tag-list-link{
+    display: block;
+    padding: 8px;
+    margin:4px;
+    text-decoration: none;
+    background-color: #5cb85c;
+    color:white;
+    border-radius:3px;
+}
+.tag-list .tag-list-item .tag-list-link:hover{
+    background-color: #449d44;
+    border-color:#398439;
+}
+.tag-list .tag-list-item .tag-list-count{
+    display:none;
 }
