@@ -121,7 +121,8 @@ p{
 }
 .category-list{
   list-style-type: none;
-  text-align:center;
+  margin:0;
+  padding:0;
 }
 .category-list li{
   text-decoration: none;
