@@ -119,14 +119,14 @@ p{
   color:rgb(241,241,241);
   font-size:20px;
 }
-.category-list{
+/*.category-list{
   list-style-type: none;
   margin:0;
   padding:0;
 }
 .category-list li{
   text-decoration: none;
-}
+}*/
 #head{
   position:absolute;
   width:100%;
@@ -163,7 +163,7 @@ header:hover{
 }
 #ab_ca{
   overflow:auto;
-  height:80%;
+  height:90%;
 }
 .about_fix
 {
