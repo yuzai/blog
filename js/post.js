@@ -28,7 +28,6 @@ var link = document.getElementsByClassName('toc-link');
 for(var i=0;i<link.length;i++)
 {
     var mao = /#[\u4e00-\u9fa5]*/;
-    console.log(link[i].href.match(mao)[0]);
     link[i].onclick = function(){
       var temp = $(this.href.match(mao)[0]);
       $(this.href.match(mao)[0]).animate({'font-size':'30px'},1000);
@@ -37,3 +36,7 @@ for(var i=0;i<link.length;i++)
       return false;
     }
 }
+
+// <div class="pagination">
+//   <p><%- paginator({ total: Math.ceil(site.posts.length / config.per_page)}) %></p>
+// </div>

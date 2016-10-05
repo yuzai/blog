@@ -85,8 +85,7 @@ body { padding-top: 70px; }
     height:30px;
     text-decoration: none;
     margin:1%;
-    color:grey;
-    opacity: 0.5;
+		opacity:0.5;
 }
 #aboutme li a:hover{
   color:#428bca;
@@ -194,4 +193,23 @@ header:hover{
 }
 .tag-list .tag-list-item .tag-list-count{
     display:none;
+}
+.work-figure{
+	position:relative;
+	top:0;
+	left:0;
+}
+.img_pc{
+	max-width: 100%;
+	height:auto;
+	display:block;
+}
+.img_mobile{
+	position:absolute;
+	bottom:10%;
+  right:10%;
+	max-height: 70%;
+	width:auto;
+	display:block;
+	outline:1px solid white;
 }
