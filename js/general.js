@@ -1,7 +1,7 @@
 var list = document.getElementsByClassName('category-list-count');
 for(var i=0;i<list.length;i++)
 {
-    list[i].innerHTML  = ' ('+list[i].innerHTML+')';
+    list[i].innerHTML  = '('+list[i].innerHTML+')';
 }
 
 document.addEventListener('scroll',function(){
