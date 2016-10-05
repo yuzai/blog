@@ -234,3 +234,17 @@ width: 100%
 	z-index:5;
 	width:80%;
 }
+#up{
+	opacity:1;
+}
+#up:hover{
+	opacity:1;
+}
+@media screen and (max-width:768px){
+	#up{
+		opacity:0.4;
+	}
+	#up:hover{
+		opacity:1;
+	}
+}

@@ -83,3 +83,8 @@ $('#ab_ca,body').click(function(){
    }
    }
 })
+
+
+$('#up').click(function(){
+   $("html,body").animate({scrollTop:0}, 500);
+});
