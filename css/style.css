@@ -210,3 +210,7 @@ header:hover{
 	display:block;
 	outline:1px solid white;
 }
+#archive2 .article-tag-list{
+	list-style-type: none;
+	padding:0;
+}
