@@ -60,6 +60,8 @@ $('#slide_aboutme').click(function(){
    {
     if($('#ab_ca').hasClass('sideslide_control')){
       var w = $('#ab_ca').parent().width();
+      console.log(w);
+      $('#ab_ca').css({'width':w});
       if($('#ab_ca').css('left') == '0px')
          $('#ab_ca').animate({left:-w});
       else {
