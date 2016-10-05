@@ -30,7 +30,6 @@ if(window.pageYOffset >= 202 && window.innerWidth >=768 ){
 }
 else {
   $('#ab_ca').removeClass('about_fix');
-  $('#ab_ca').css('width','auto');
 }
 })
 sideslide_control();
