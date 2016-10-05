@@ -136,17 +136,11 @@ p{
   left:0;
   z-index:-1;
 }
-.category_col{
-	height:800px;
-}
 @media screen and (max-width: 768px)
 {
   #head{
     background:url(/rs/p1.jpg)  -110px -140px no-repeat;
   }
-	.category_col{
-		height:auto;
-	}
 }
 header{
   opacity: 0.4;
@@ -213,4 +207,29 @@ header:hover{
 #archive2 .article-tag-list{
 	list-style-type: none;
 	padding:0;
+}
+
+
+/*ceshi slide*/
+.slide {
+position: relative;
+height: 200;
+lightyellow;
+}
+
+.slide .inner {
+position: absolute;
+left: 0;
+bottom: 0;
+height: 100;
+lightblue;
+width: 100%
+}
+
+.sideslide_control{
+	position:fixed;
+	top:0;
+	height:100%;
+	left:0;
+	z-index:5;
 }
