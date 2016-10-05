@@ -24,7 +24,7 @@ var head = document.getElementById('daohang');
 
 document.addEventListener('scroll',function(){
 if(window.pageYOffset >= 202 && window.innerWidth >=768 ){
-  var w = $('#ab_ca').parent().width();
+  var w = window.screen.availWidth
   $('#ab_ca').addClass('about_fix');
   $('#ab_ca').css('width',w);
 }
@@ -34,7 +34,7 @@ else {
 })
 sideslide_control();
 function sideslide_control(){
-  var w = $('#ab_ca').parent().width();
+  var w = window.screen.availWidth
 if(window.innerWidth >= 768)
 {
   $('#ab_ca').removeClass('sideslide_control');
@@ -43,7 +43,7 @@ if(window.innerWidth >= 768)
   });
 }
 else {
-  // var w = $('#ab_ca').parent().width();
+  // var w = window.screen.availWidth
   $('#ab_ca').addClass('sideslide_control');
   $('#ab_ca').css({
     'left':-w
@@ -58,7 +58,7 @@ $('#slide_aboutme').click(function(){
    if(window.innerWidth < 768)
    {
     if($('#ab_ca').hasClass('sideslide_control')){
-      var w = $('#ab_ca').parent().width();
+      var w = window.screen.availWidth
       console.log(w);
       $('#ab_ca').css({'width':w});
       if($('#ab_ca').css('left') == '0px')
@@ -73,7 +73,7 @@ $('#ab_ca,body').click(function(){
   if(window.innerWidth < 768)
   {
    if($('#ab_ca').hasClass('sideslide_control')){
-     var w = $('#ab_ca').parent().width();
+     var w = window.screen.availWidth
      if($('#ab_ca').css('left') == '0px')
         $('#ab_ca').animate({left:-w},'slow');
    }
