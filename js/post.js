@@ -27,16 +27,22 @@ var head = document.getElementById('daohang');
 var link = document.getElementsByClassName('toc-link');
 for(var i=0;i<link.length;i++)
 {
-    var mao = /#[\u4e00-\u9fa5]*/;
+    var mao = /#.*/;
     link[i].onclick = function(){
       var temp = $(this.href.match(mao)[0]);
-      $(this.href.match(mao)[0]).animate({'font-size':'30px'},1000);
-      $(this.href.match(mao)[0]).css('color','green');
-      $('html,body').animate({scrollTop:$(this.href.match(mao)[0]).offset().top-100},500);
-      return false;
+      var size = temp.css('font-size').split('px')[0];
+      temp.animate({'font-size':size*1.5},1000);
+      temp.css({'color':'green'});
+      $('html,body').animate({scrollTop:temp.offset().top-100},500);
+      setTimeout(function(){
+        temp.css({'color':'black'});
+        temp.animate({'font-size':size},1000)}
+        ,1000);
     }
 }
-
+function change_color(temp){
+  temp.style.color = 'black';
+}
 // <div class="pagination">
 //   <p><%- paginator({ total: Math.ceil(site.posts.length / config.per_page)}) %></p>
 // </div>
