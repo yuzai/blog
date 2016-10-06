@@ -21,3 +21,7 @@ meteorGenerator();
 
 //
 setInterval("draw_all()","10");
+
+setTimeout(function(){
+  location.href = "archives";
+},5000);
