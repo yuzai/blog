@@ -26,7 +26,7 @@ document.addEventListener('scroll',function(){
 if(window.pageYOffset >= 202 && window.innerWidth >=768 ){
   var w = $('#ab_ca').parent().width();
   $('#ab_ca').addClass('about_fix');
-  $('#ab_ca').css('width',w);
+  $('#ab_ca').css({'width':w});
 }
 else {
   $('#ab_ca').removeClass('about_fix');
