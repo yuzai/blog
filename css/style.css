@@ -248,3 +248,7 @@ width: 100%
 		opacity:1;
 	}
 }
+.post-content{
+	white-space: normal;
+  word-break: break-all; 
+}
