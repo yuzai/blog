@@ -54,25 +54,67 @@
         <div class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1 category_col'>
           <div class ='well'>
         <h1 class='post-title'>
-            <span>third</span>
+            <span>javascript执行环境和作用域</span>
         </h1>
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/">test</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
         <section class='post-content'>
-            <a id="more"></a>
+            <p>之前没有系统的对javascript进行学习，主要用来操作DOM，每次看js的书，也就是看到变量类型和语句就停下来了。因为这一块跟c语言还是很像，就没什么兴趣继续读下去,最近写了一个比较长的js，发现变量，函数的作用域很重要，虽然看懂了问题，但是没有理解到位，今天看了《javascript高级程序设计》，提到的执行环境和作用域，才总算是弄明白了问题的来龙去脉。<br><a id="more"></a></p>
+<h3 id="例子1"><a href="#例子1" class="headerlink" title="例子1"></a>例子1</h3><pre><code>function f2(){
+    var s=10;
+    function f1(){
+        console.log(s);
+    }
+    f1();
+}
+f2();//输出10
+</code></pre><p>在上述代码中，函数f2中定义了函数f1,在f1中输出s。结果是10。不难理解</p>
+<h3 id="例子2"><a href="#例子2" class="headerlink" title="例子2"></a>例子2</h3><pre><code>var s = 100;
+function f1(){
+    console.log(s);
+}
+function f2(){
+    var s=10;
+    f1(); //输出100
+    console.log(s);
+}
+f2();//输出10
+</code></pre><p>这个例子中，f1函数定义在全局中，在f2中调用f1函数，输出的s还是全局中的s。这个就是执行环境的问题。</p>
+<h3 id="原书中的例子"><a href="#原书中的例子" class="headerlink" title="原书中的例子"></a>原书中的例子</h3><p>[!图一][<a href="http://blog.xiaoboma.com/作用域.jpg" target="_blank" rel="external">http://blog.xiaoboma.com/作用域.jpg</a>]<br>有点尴尬，在hexo中还不知道怎么可以便捷的插入图片，暂时把图片文件传到主页吧。<br>看到图中的解释，其实就是，<strong>定义函数的位置，决定了函数的执行环境，也就是决定了在该函数中变量的访问权限：只能访问到高级以及同级的变量，不论该函数在哪里调用（例子2中就是在同级函数中进行调用，并没有修改s的值，s还是同级的s，而不是函数f2中的局部变量s），都不会改变它对变量的访问权限。</strong> 这一点跟c语言很不一样，这次就因为这个错调试了一会。记录一下这个坑，其实不算坑，书上写的明明白白，只是自己没有注意。</p>
+<h3 id="最后一次确认问题"><a href="#最后一次确认问题" class="headerlink" title="最后一次确认问题"></a>最后一次确认问题</h3><p>最后用一个同级函数的子函数的子函数对f1()函数进行调用，彻底验证执行环境以及作用域问题。</p>
+<pre><code>var s = 1;
+function f1(){
+    console.log(s);
+}
+function f2(){
+    var s=2;
+    function f3(){
+        var s=3
+        function f4(){
+            var s=4;
+        f1();//输出1
+        console.log(s);//输出4
+      }
+        f4();
+  }
+    f3();
+}
+f2();
+</code></pre><p>f1(),不论在何时进行调用，内部的s由f1()定义的位置决定，必定是同级定义的或者更外层定义的s起作用。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>定义函数的位置，决定了函数的执行环境，也就是决定了在该函数中变量的访问权限：只能访问到高级以及同级的变量，不论该函数在哪里调用，都不会改变它对变量的访问权限。</strong></p>
 
         </section>
         <hr>
         
-          <p>上一篇：<a  href = "/2015/09/30/first/">first</a></p>
+          <p>上一篇：<a  href = "/2016/10/06/hexo主题制作（4）：学习以及巩固的知识记录/">hexo主题制作（4）：学习以及巩固的知识记录</a></p>
         
         
-          <p>下一篇：<a  href = /2016/09/22/My-first-Post/>My first Post</a></p>
+          <p>下一篇：<a onclick = 'return false'>没有了</a></p>
         
         
             <section id="comments">
             
                     <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="2015/09/30/third/" data-title="third" data-url="https://yuzai.github.io/2015/09/30/third/"></div>
+<div class="ds-thread" data-thread-key="2016/10/13/javascript执行环境和作用域/" data-title="javascript执行环境和作用域" data-url="https://yuzai.github.io/2016/10/13/javascript执行环境和作用域/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -97,8 +139,8 @@
          <div class = 'well' id = 'ab_ca'>
 
 
-<h4>third</h4>
-
+<h4>javascript执行环境和作用域</h4>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#例子1"><span class="toc-text">例子1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子2"><span class="toc-text">例子2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原书中的例子"><span class="toc-text">原书中的例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后一次确认问题"><span class="toc-text">最后一次确认问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
 <h4>归档</h4>
 <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">5</span></li></ul>
 <h4>最新文章</h4>
