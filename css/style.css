@@ -250,5 +250,14 @@ width: 100%
 }
 .post-content{
 	white-space: normal;
-  word-break: break-all; 
+  word-break: break-all;
+	overflow: auto;
 }
+/*.post-content img{
+	max-width: 2000px;
+}
+@media screen and (max-width:768px){
+	.post-content img{
+	max-width:400px;
+	}
+}*/
