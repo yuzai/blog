@@ -251,6 +251,11 @@ width: 100%
 .post-content{
 	white-space: normal;
   word-break: break-all;
+}
+.post-content figure{
+	overflow: auto;
+}
+.post-content p{
 	overflow: auto;
 }
 /*.post-content img{
