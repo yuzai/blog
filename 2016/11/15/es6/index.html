@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta name="baidu-site-verification" content="81rzqdpRFv" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel = "Shortcut Icon" href= '/favicon.ico' >
+    <title>my blog</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/fontdiao.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+    <div class="main">
+        <div id = 'head'>
+</div>
+<header id = 'daohang'>
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation" >
+<div class="container-fluid">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand"><i class= 'icon-home' id = 'slide_aboutme' ></i> Xiaobo Ma</a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+      
+          <li><a href="/" >Welcome</a></li>
+      
+          <li><a href="/archives" >Archives</a></li>
+      
+          <li><a href="/my-works" >My-Work</a></li>
+      
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>
+
+</header>
+
+<div style = 'margin-top:180px'>
+    <article>
+      <div class = 'container-fluid'>
+      <div class = 'row'>
+        <div class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1 category_col'>
+          <div class ='well'>
+        <h1 class='post-title'>
+            <span>es6笔记</span>
+        </h1>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+        <section class='post-content'>
+            <p>es6的学习笔记<br><a id="more"></a></p>
+<h2 id="3-1-对象字面量"><a href="#3-1-对象字面量" class="headerlink" title="3.1 对象字面量"></a>3.1 对象字面量</h2><hr>
+<blockquote>
+<p>三个改进的地方：1.属性值缩写，可计算属性名称，方法定义</p>
+</blockquote>
+<h3 id="3-1-1-属性值缩写"><a href="#3-1-1-属性值缩写" class="headerlink" title="3.1.1 属性值缩写"></a>3.1.1 属性值缩写</h3><p>当变量已经定义后，再定义对象的时候可以直接写变量名称，就会给该对象增加一个属性，属性名称为变量名，属性的值就是对应的变量的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">var store = &#123;&#125;;</div><div class="line">var s=[1,2,3,4];</div><div class="line">var api=&#123;s,getItem,setItem,clear&#125;;</div><div class="line"></div><div class="line">function getItem(key)&#123;</div><div class="line">  return key in store?store[key]:null;</div><div class="line">&#125;</div><div class="line">function setItem(key,value)&#123;</div><div class="line">  store[key]=value;</div><div class="line">&#125;</div><div class="line">function clear()&#123;</div><div class="line">  store = &#123;&#125;;</div><div class="line">&#125;</div><div class="line">console.log(api.getItem);</div><div class="line">console.log(api.setItem);</div><div class="line">console.log(api.clear);</div><div class="line">console.log(api.s);</div></pre></td></tr></table></figure>
+<h3 id="3-1-2-可计算属性名"><a href="#3-1-2-可计算属性名" class="headerlink" title="3.1.2 可计算属性名"></a>3.1.2 可计算属性名</h3><p>定义对象时，用方括号括住的属性名，最终的属性名应该是以该属性名命名的变量的值。<strong>不能和第一个特性结合使用</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">var expertise = &apos;journalism&apos;</div><div class="line">var person = &#123;</div><div class="line">  name: &apos;Sharon&apos;,</div><div class="line">  age: 27,</div><div class="line">  [expertise]: &#123;</div><div class="line">    years: 5,</div><div class="line">    interests: [&apos;international&apos;, &apos;politics&apos;, &apos;internet&apos;]</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">console.log(person[expertise].interests);</div></pre></td></tr></table></figure>
+<h3 id="3-1-3-方法定义"><a href="#3-1-3-方法定义" class="headerlink" title="3.1.3 方法定义"></a>3.1.3 方法定义</h3><p>对象中的函数可以直接定义。不必通过function。setter和getter和以前的用法相同，别的函数可以直接采用函数名+参数+定义的形式定义对象的方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">var s=4;</div><div class="line">var person=&#123;</div><div class="line">  get fule()&#123;</div><div class="line">    return s;</div><div class="line">  &#125;,</div><div class="line">  set fule(value)&#123;</div><div class="line">    s=value;</div><div class="line">  &#125;,</div><div class="line">  add()&#123;</div><div class="line">    return s+1;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">console.log(person.fule);//4</div><div class="line">console.log(person.add());//5</div><div class="line">person.fule=10;</div><div class="line">console.log(person.fule);//10</div></pre></td></tr></table></figure>
+<h2 id="3-2-箭头函数"><a href="#3-2-箭头函数" class="headerlink" title="3.2 箭头函数"></a>3.2 箭头函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var example = function (parameters) &#123;</div><div class="line">  // function body</div><div class="line">&#125;</div><div class="line">var example = (parameters) =&gt; &#123;</div><div class="line">  // function body</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>箭头函数看起来和匿名函数很像，但是实际上有很大的区别：他们没有函数名，他们被绑定了词法范围。</p>
+<h3 id="3-2-1-词法范围"><a href="#3-2-1-词法范围" class="headerlink" title="3.2.1 词法范围"></a>3.2.1 词法范围</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var timer=&#123;</div><div class="line">  second:0,</div><div class="line">  start()&#123;</div><div class="line">    setInterval(()=&gt;&#123;</div><div class="line">      console.log(this);//object timer</div><div class="line">      this.second++;</div><div class="line">    &#125;,1000);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">timer.start();</div><div class="line">setTimeout(function()&#123;console.log(timer.second)&#125;,3700);//3</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var timer=&#123;</div><div class="line">  second:0,</div><div class="line">  start()&#123;</div><div class="line">    setInterval(function()&#123;</div><div class="line">      console.log(this);//window</div><div class="line">      this.second++;</div><div class="line">    &#125;,1000);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">timer.start();</div><div class="line">setTimeout(function()&#123;console.log(timer.second)&#125;,3700);//0</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var timer=&#123;</div><div class="line">  second:0,</div><div class="line">  start()&#123;</div><div class="line">    var that=this;</div><div class="line">    setInterval(function()&#123;</div><div class="line">      console.log(that);//window</div><div class="line">      that.second++;</div><div class="line">    &#125;,1000);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">timer.start();</div><div class="line">setTimeout(function()&#123;console.log(timer.second)&#125;,3700);//3</div></pre></td></tr></table></figure>
+<p>通过使用箭头函数，可以保证调用对象的方法时this一直绑定在方法的词法范围内，也就是this一直指向对象（不太完善，大部分情况下）。而如果使用匿名函数，词法范围由使用该匿名函数的此法范围决定，一般是window</p>
+<h3 id="3-2-2-箭头函数的简写"><a href="#3-2-2-箭头函数的简写" class="headerlink" title="3.2.2 箭头函数的简写"></a>3.2.2 箭头函数的简写</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var example = (parameters) =&gt; &#123;</div><div class="line">  // function body</div><div class="line">&#125;</div><div class="line">var double = value =&gt; &#123;//只有一个参数</div><div class="line">  return value * 2</div><div class="line">&#125;</div><div class="line">var double = (value) =&gt; value * 2</div><div class="line">var double = value =&gt; value * 2</div></pre></td></tr></table></figure>
+<h3 id="3-2-3-优点和使用场景"><a href="#3-2-3-优点和使用场景" class="headerlink" title="3.2.3 优点和使用场景"></a>3.2.3 优点和使用场景</h3><p>十分适合用在词法绑定的匿名函数上。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[1, 2, 3, 4]</div><div class="line">  .map(value =&gt; value * 2)</div><div class="line">  .filter(value =&gt; value &gt; 2)</div><div class="line">  .forEach(value =&gt; console.log(value))</div><div class="line">// &lt;- 4</div><div class="line">// &lt;- 6</div><div class="line">// &lt;- 8</div></pre></td></tr></table></figure></p>
+<p><strong>注意事项</strong><br>当箭头函数的隐含返回值（没有用return）时，必须在对象外围加上()不然和函数的定义是一致的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">var objectFactory = () =&gt; (&#123; modular: &apos;es6&apos; &#125;)</div><div class="line"></div><div class="line">[1, 2, 3].map(value =&gt; &#123; number: value &#125;)</div><div class="line">// &lt;- [undefined, undefined, undefined]</div><div class="line"></div><div class="line">[1, 2, 3].map(value =&gt; &#123; number: value, verified: true &#125;)</div><div class="line">// &lt;- SyntaxError</div><div class="line"></div><div class="line">[1, 2, 3].map(value =&gt; (&#123; number: value, verified: true &#125;))</div><div class="line">/* &lt;- [</div><div class="line">  &#123; number: 1, verified: true &#125;,</div><div class="line">  &#123; number: 2, verified: true &#125;,</div><div class="line">  &#123; number: 3, verified: true &#125;]</div><div class="line">*/</div></pre></td></tr></table></figure></p>
+<h3 id="3-3-assign-destructuring"><a href="#3-3-assign-destructuring" class="headerlink" title="3.3 assign destructuring"></a>3.3 assign destructuring</h3><p>最简单的特性，方便了把对象的属性值赋值给变量</p>
+<h3 id="3-3-1-解构对象"><a href="#3-3-1-解构对象" class="headerlink" title="3.3.1 解构对象"></a>3.3.1 解构对象</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var pseudonym = character.pseudonym//es5</div><div class="line">var &#123;pseudonym&#125; = character //es6</div><div class="line"></div><div class="line">var alias = character.pseudonym//es5</div><div class="line">var &#123; pseudonym: alias &#125; = character//es6</div><div class="line"></div><div class="line">var person = &#123; scientist: true &#125;</div><div class="line">var type = &apos;scientist&apos;</div><div class="line">var &#123; [type]: value &#125; = person //es6</div><div class="line">console.log(value)</div><div class="line">// &lt;- true</div><div class="line">value = person[type] //es5</div></pre></td></tr></table></figure>
+<h3 id="3-3-2-解构数组"><a href="#3-3-2-解构数组" class="headerlink" title="3.3.2 解构数组"></a>3.3.2 解构数组</h3><p>跟解构对象一样，只是采用方括号。毕竟操作的对象是数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var left = 5</div><div class="line">var right = 7</div><div class="line">[left, right] = [right, left]</div></pre></td></tr></table></figure></p>
+<h3 id="3-3-3-解构函数"><a href="#3-3-3-解构函数" class="headerlink" title="3.3.3 解构函数"></a>3.3.3 解构函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function sumOf (a = 1, b = 2, c = 3) &#123;</div><div class="line">  return a + b + c</div><div class="line">&#125;</div><div class="line">console.log(sumOf(undefined, undefined, 4))</div><div class="line">// &lt;- 1 + 2 + 4 = 7</div><div class="line"></div><div class="line">function carFactory (&#123; brand = &apos;Volkswagen&apos;, year = 1999 &#125; = &#123;&#125;) &#123;</div><div class="line">  console.log(brand)</div><div class="line">  console.log(year)</div><div class="line">&#125;</div><div class="line">carFactory()</div><div class="line">// &lt;- &apos;Volkswagen&apos;</div><div class="line">// &lt;- 1999</div></pre></td></tr></table></figure>
+<h3 id="3-3-4-使用场景"><a href="#3-3-4-使用场景" class="headerlink" title="3.3.4 使用场景"></a>3.3.4 使用场景</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">function getCoordinates () &#123;</div><div class="line">  return &#123; x: 10, y: 22, z: -1, type: &apos;3d&apos; &#125;</div><div class="line">&#125;</div><div class="line">var &#123; x, y &#125; = getCoordinates()</div><div class="line"></div><div class="line">function splitDate (date) &#123;</div><div class="line">  var rdate = /(\d+).(\d+).(\d+)/</div><div class="line">  return rdate.exec(date)</div><div class="line">&#125;</div><div class="line">var [, year, month, day] = splitDate(&apos;2015-11-06&apos;)</div></pre></td></tr></table></figure>
+<h2 id="3-4-rest参数和扩散运算操作符"><a href="#3-4-rest参数和扩散运算操作符" class="headerlink" title="3.4 rest参数和扩散运算操作符"></a>3.4 rest参数和扩散运算操作符</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function print () &#123;</div><div class="line">  var list = Array.prototype.slice.call(arguments)</div><div class="line">  console.log(list)</div><div class="line">&#125;</div><div class="line">print(&apos;a&apos;, &apos;b&apos;, &apos;c&apos;)</div><div class="line">// &lt;- [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]</div></pre></td></tr></table></figure>
+<p>在es5中，获取参数比较繁琐，在es6中，使用rest参数可以很好的获取函数的参数</p>
+<h3 id="3-4-1-rest-参数"><a href="#3-4-1-rest-参数" class="headerlink" title="3.4.1 rest 参数"></a>3.4.1 rest 参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function print (...list) &#123;</div><div class="line">  console.log(list)</div><div class="line">&#125;</div><div class="line">print(&apos;a&apos;, &apos;b&apos;, &apos;c&apos;)</div><div class="line">// &lt;- [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]</div><div class="line"></div><div class="line">function print (first, ...list) &#123;</div><div class="line">  console.log(first)</div><div class="line">  console.log(list)</div><div class="line">&#125;</div><div class="line">print(&apos;a&apos;, &apos;b&apos;, &apos;c&apos;)</div><div class="line">// &lt;- &apos;a&apos;</div><div class="line">// &lt;- [b&apos;, &apos;c&apos;]</div></pre></td></tr></table></figure>
+<p>通过3个点来获取参数到list，…前面的参数可以按照原来的方式进行赋值，后面的多余参数会直接赋值给list<br>箭头函数必须加括号如果使用…参数，即便只有一个参数。否则会报错</p>
+
+        </section>
+        <hr>
+        
+          <p>上一篇：<a  href = "/2016/11/13/体会/">体会</a></p>
+        
+        
+          <p>下一篇：<a  href = /2016/11/15/es6-1/>es6</a></p>
+        
+        
+            <section id="comments">
+            
+                    <!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="2016/11/15/es6/" data-title="es6笔记" data-url="https://yuzai.github.io/2016/11/15/es6/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    var duoshuoQuery = {short_name:'yuzaizai'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+                
+            </section>
+        
+          </div>
+       </div>
+       <div class = 'col-xs-12 col-xs-offset-0 col-md-3 col-md-offset-0 col-sm-3 col-sm-offset-0 col-lg-3 col-lg-offset-0'>
+         <div class = 'well' id = 'ab_ca'>
+
+
+<h4>es6笔记</h4>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-对象字面量"><span class="toc-text">3.1 对象字面量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-属性值缩写"><span class="toc-text">3.1.1 属性值缩写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-可计算属性名"><span class="toc-text">3.1.2 可计算属性名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3-方法定义"><span class="toc-text">3.1.3 方法定义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-箭头函数"><span class="toc-text">3.2 箭头函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-词法范围"><span class="toc-text">3.2.1 词法范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2-箭头函数的简写"><span class="toc-text">3.2.2 箭头函数的简写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-3-优点和使用场景"><span class="toc-text">3.2.3 优点和使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-assign-destructuring"><span class="toc-text">3.3 assign destructuring</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1-解构对象"><span class="toc-text">3.3.1 解构对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2-解构数组"><span class="toc-text">3.3.2 解构数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-3-解构函数"><span class="toc-text">3.3.3 解构函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-4-使用场景"><span class="toc-text">3.3.4 使用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-rest参数和扩散运算操作符"><span class="toc-text">3.4 rest参数和扩散运算操作符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-1-rest-参数"><span class="toc-text">3.4.1 rest 参数</span></a></li></ol></li></ol>
+<h4>归档</h4>
+<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">5</span></li></ul>
+<h4>最新文章</h4>
+<ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/15/es6-1/">es6</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/15/es6/">es6笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/体会/">体会</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/15/前端面试：循环绑定click事件/">前端面试：循环绑定click事件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/13/javascript执行环境和作用域/">javascript执行环境和作用域</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/06/hexo主题制作（4）：学习以及巩固的知识记录/">hexo主题制作（4）：学习以及巩固的知识记录</a></li></ul>
+
+<h4>分类</h4>
+<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/es6/">es6</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
+
+
+  <img id = 'my_picture'>
+  <p style='text-align:center;font-size:30px'>Xiaobo Ma</p>
+  <ul id='aboutme'>
+    <li><a  style = 'color:#000000' title = 'github' href="https://github.com/yuzai" role="button"><i class= 'icon-github'></i></a></li>
+    <li><a  style = 'color:#2672ae' title = 'blog' href= 'https://yuzai.github.io' role="button"><i class= 'icon-linkedin'></i></a></li>
+    <li><a  style = 'color:#62b900' title = 'wechat' href="/rs/wechat.jpg" role="button"><i class= 'icon-wechat'></i></a></li>
+    <li><a  style = 'color:#FF5400' title = 'my store'href="https://shop112051817.taobao.com/?spm=2013.1.1000126.d21.cwM4Hx" role="button"><i class= 'icon-taobao'></i></a></li>
+  </ul>
+
+<h4>标签</h4>
+<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo主题制作/">hexo主题制作</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/note/">note</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端面试题/">前端面试题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进度/">进度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+
+
+
+
+</div>
+
+      </div>
+      </div>
+
+      </div>
+    </article>
+
+</div>
+<div style="position:fixed;right:1%;bottom:1%">
+<button id="up" class="btn btn-success" style = 'color:green'><i class="icon-angle-up"></i><tton>
+</div>
+<footer class='myfoot'>
+  <div class=" container-fluid" >
+       <p><a href = 'https://github.com/yuzai'>Writer:Maxiaobo  <i class='icon-github'></i></a></p>
+  </div>
+</footer>
+
+
+    </div>
+
+    <script src="/js/jquery-1.12.3.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/index.js"></script>
+    
+    <script src="/js/general.js"></script>
+    
+    
+    <script src="/js/post.js"></script>
+    
+    <script src="/js/tag.js"></script>
+    
+</body>
+</html>
