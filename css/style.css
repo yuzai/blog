@@ -269,3 +269,13 @@ width: 100%
 .category_col{
 	padding:0;
 }
+pre{
+	padding:0;
+}
+
+.hljs{
+	overflow:auto;
+}
+pre code{
+	white-space: pre;
+}
