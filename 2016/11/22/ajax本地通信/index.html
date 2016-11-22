@@ -91,7 +91,9 @@
 
 &lt;/html&gt;
 </code></pre>
-<p>上述代码定义了一个XMLHttpRequest对象，通过open和send方法实现了对本地flex.html的通信，获取其中的信息并写入到DOM的myDiv中去，当用chrome的时候，时始终提示Load出错，没有权限，但是用firefox就没有问题，所以去网上搜索了一下，其实是chrome为了安全，禁止了网页与系统文件的ajax，所以只需要在chrome的快捷方式上加入–allow-file-access-from-files选项就可以了。如下图：<br><img src="http://blog.xiaoboma.com/设置.jpg" alt="图一"><br>要吐槽的地方其实是，我改了很多遍，浏览器重启了很多遍，都没有成功，最后发现竟然是因为我在另一个桌面上一直开着chrome，（win10多桌面），导致了一直失败，最后，修改了这里，终于没报错了，然而还是没有效果，所以把xmlhttp.status的值输出了一下，发现输出是0，去网上搜了一下，这个是因为本地通信，所以是0.但是在firefox中依旧是200。</p>
+<p>上述代码定义了一个XMLHttpRequest对象，通过open和send方法实现了对本地flex.html的通信，获取其中的信息并写入到DOM的myDiv中去，当用chrome的时候，时始终提示Load出错，没有权限，但是用firefox就没有问题，所以去网上搜索了一下，其实是chrome为了安全，禁止了网页与系统文件的ajax，所以只需要在chrome的快捷方式上加入–allow-file-access-from-files选项就可以了。如下图：</p>
+<p><img src="http://blog.xiaoboma.com/设置.jpg" alt="图一"></p>
+<p>要吐槽的地方其实是，我改了很多遍，浏览器重启了很多遍，都没有成功，最后发现竟然是因为我在另一个桌面上一直开着chrome，（win10多桌面），导致了一直失败，最后，修改了这里，终于没报错了，然而还是没有效果，所以把xmlhttp.status的值输出了一下，发现输出是0，去网上搜了一下，这个是因为本地通信，所以是0.但是在firefox中依旧是200。</p>
 <h3 id="promise-ajax"><a href="#promise-ajax" class="headerlink" title="promise+ajax"></a>promise+ajax</h3><p>吐槽完，还是得把该做的工作做完，用promise+ajax来实现更高端的效果。promise其实是回调函数的更优雅的写法，它的写法更加易懂并且简单。</p>
 <pre><code class="js">function loadXml() {
     const p = new Promise((resolve, reject) =&gt; {
