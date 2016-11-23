@@ -59,9 +59,87 @@
         <h1 class='post-title'>
             <span>es64</span>
         </h1>
-        
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
         <section class='post-content'>
-            
+            <p>es6的学习笔记(四)：iterators and iterable<br><a id="more"></a></p>
+<blockquote>
+<p>iterator本质上是一种协议，用于定义适用于所有对象的迭代</p>
+</blockquote>
+<h3 id="迭代规则"><a href="#迭代规则" class="headerlink" title="迭代规则"></a>迭代规则</h3><p>所有的对象，都可以使用迭代协议，只要为它添加一个属性名为[Symbol.iterator]，属性值为遵循协议的一个函数就可以使用迭代协议。</p>
+<pre><code class="js">var s={
+  name:[1,2,3,4,5],
+  value:0,
+  [Symbol.iterator]:function(){   //绑定一个方法，该方法返回一个具有next方法的对象。
+    return {
+      next:()=&gt;{
+        if(this.value==this.name.length){
+          this.value = 0;          //此处需要将控制迭代的数值清零，不然只能迭代一次，亲测
+          return {value:undefined,done:true};
+        }
+        else {
+          return {value:this.name[this.value++],done:false};
+        }
+      }
+    }
+  }
+}
+for(let value of s){
+  console.log(value);//输出1,2,3,4,5
+}
+</code></pre>
+<p>当为对象s绑定了属性名为[Symbol.iterator]，且属性值符合一定的要求，就可以使用for of来进行迭代。在该方法中，应该符合以下几个规则：</p>
+<ol>
+<li>返回值是next函数</li>
+<li>next函数没有参数，返回值是一个对象{value,done}</li>
+<li>done表示该序列是否迭代结束，是一个boolean类型</li>
+<li>value是当前的输出值<br><strong>注意迭代器结束时需将控制迭代的数字还原，不然迭代器只能使用一次，其实也不算使用一次，它可以继续使用，只是使用一次之后如果不归零，再次使用直接就结束，也就没有任何数值输出，容易出错而已</strong><br>这样，就可以使用for of 语句迭代，数值就是next方法中的value,而结束就是根据done的值来判断是否结束。</li>
+</ol>
+<h3 id="自带迭代属性的对象"><a href="#自带迭代属性的对象" class="headerlink" title="自带迭代属性的对象"></a>自带迭代属性的对象</h3><p>上述的方法使得普通的对象也可以进行迭代，不过，还有一些预定义的对象也具有迭代性。比如：Array,String,DOM中的NodeList，arguments都是默认可以迭代的，也就是可以直接使用for of结构。</p>
+<h3 id="将可迭代的对象还原为数组"><a href="#将可迭代的对象还原为数组" class="headerlink" title="将可迭代的对象还原为数组"></a>将可迭代的对象还原为数组</h3><p>有两种方法，一种是spread操作符。一种是Array.form函数。Array.from除了可以把可迭代对象转换成数组，也可以把类数组对象转换成数组。类数组对象就是属性名为0,1,2,3,4并且具有length属性的对象</p>
+<pre><code class="js">var s={
+  name:[1,2,3,4,5],
+  value:0,
+  [Symbol.iterator]:function(){   //绑定一个方法，该方法返回一个具有next方法的对象。
+    return {
+      next:()=&gt;{
+        if(this.value==this.name.length){
+          this.value = 0;
+          return {value:undefined,done:true};
+        }
+        else {
+          return {value:this.name[this.value++],done:false};
+        }
+      }
+    }
+  }
+}
+console.log(...s);//此处直接使用...操作符，输出1 2 3 4 5，此处是没有,的，因为并没有转换成数组，相当于连续输出了
+console.log(Array.from(s));//此处输出1,2,3,4,5
+var q = [...s];//使用...操作符将s转换成数组
+console.log(q);//输出1,2,3,4,5
+for(let i in q)
+  console.log(i)//输出0-4
+console.log(Array.from({0:&#39;a&#39;,1:&#39;b&#39;,2:&#39;c&#39;,length:3}));//此处输出a,b,c
+</code></pre>
+<h3 id="无限序列"><a href="#无限序列" class="headerlink" title="无限序列"></a>无限序列</h3><p>如果在next函数中，done变量始终是false，那么这个序列永远不会结束，同样的，如果对这个序列进行Array.from()或者[…]操作以及for of都会使程序崩溃。</p>
+<pre><code class="js">const x = {
+  [Symbol.iterator]:()=&gt;{
+    return {
+      next:()=&gt;{return {value:Math.random(),done:false}}
+    }
+  }
+}
+console.log(x[Symbol.iterator]().next().value)//不断执行，一直会产生一个新的随机数
+for(let s of x)
+  console.log(s)//后面的for循环一旦执行，浏览器的控制台就卡住，只能关闭重启
+
+const [one, another] = random  //可以使用这样的结构来访问有限的无限序列中的元素
+console.log(one)
+// &lt;‐ 0.23235511826351285
+console.log(another)
+// &lt;‐ 0.28749457537196577
+</code></pre>
+
         </section>
         <hr>
         
@@ -100,14 +178,14 @@
 
 
 <h4>es64</h4>
-
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#迭代规则"><span class="toc-text">迭代规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自带迭代属性的对象"><span class="toc-text">自带迭代属性的对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#将可迭代的对象还原为数组"><span class="toc-text">将可迭代的对象还原为数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无限序列"><span class="toc-text">无限序列</span></a></li></ol>
 <h4>归档</h4>
 <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">5</span></li></ul>
 <h4>最新文章</h4>
 <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/arror/">arrow的疑问</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/es64/">es64</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/22/es63/">es6笔记三</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/22/ajax本地通信/">ajax本地通信</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/15/es6/">es6笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/体会/">体会</a></li></ul>
 
 <h4>分类</h4>
-<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/es6/">es6</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">3</span></li></ul>
+<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/es6/">es6</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">3</span></li></ul>
 
 
   <img id = 'my_picture'>
@@ -120,7 +198,7 @@
   </ul>
 
 <h4>标签</h4>
-<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/">ajax</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo主题制作/">hexo主题制作</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/note/">note</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端面试题/">前端面试题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/疑问/">疑问</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进度/">进度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">2</span></li></ul>
+<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/">ajax</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo主题制作/">hexo主题制作</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/note/">note</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端面试题/">前端面试题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/疑问/">疑问</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进度/">进度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">2</span></li></ul>
 
 
 
