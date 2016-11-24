@@ -57,25 +57,110 @@
         <div class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1 category_col'>
           <div class ='well'>
         <h1 class='post-title'>
-            <span>third</span>
+            <span>es5-generator</span>
         </h1>
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/">test</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
         <section class='post-content'>
-            <a id="more"></a>
+            <p>es6的学习笔记(五)：generator<br><a id="more"></a></p>
+<p>generator是一个简单的生成符合iterator协议的新特性。它可以方便的生成iterator，具有iterator的特性，也就是具有[Symbol.iterator]，同时也有next()函数，同时可以使用for of,Array.from,[…]等操作。<br>调用generator函数，返回一个iterator对象，执行next()函数，会返回{value:value,done:boolean}。内部通过yield产生value，实例如下：</p>
+<pre><code class="js">function* gen(){
+  yield &#39;hello&#39;
+  yield &#39;hi&#39;
+  return &#39;byebye&#39;
+};
+let g = gen();
+console.log(g.next().value);//hello
+console.log(g.next().value);//hi
+console.log(g.next().value);//byebye
+console.log(g.next().value);//undefined
+console.log(g.next().value);//undefined
+</code></pre>
+<p>其中，迭代器的next()执行顺序如下：</p>
+<ol>
+<li>遇到yield语句，暂停执行后面的操作，并把紧跟在yield后面的值作为返回值。</li>
+<li>下一次调用next()方法时，再继续往下运行，直到遇到下一个yield，如果next()函数有参数，则在一定条件下会进行赋值操作，然后再继续执行,第一次next的参数是无效的</li>
+<li>如果没有再遇到新的yield语句，就一直运行到函数结束，直到return语句为止，并将return语句后面的表达式的值，作为返回的对象的value属性值。</li>
+<li>如果该函数没有return语句，则返回的对象的value属性值为undefined。</li>
+</ol>
+<pre><code class="js">var arr = [1, [[2, 3], 4], [5, 6]];
+
+var flat = function* (a) {
+  var length = a.length;
+  for (var i = 0; i &lt; length; i++) {
+    let y;
+    var item = a[i];
+    if (typeof item !== &#39;number&#39;) {
+      y=yield* flat(item);
+      console.log(y)
+    } else {
+      y=yield item;
+      console.log(y);
+    }
+  }
+};
+
+const s=flat(arr);
+console.log(s.next(&#39;hi1&#39;).value); //1
+console.log(s.next(&#39;hi2&#39;).value); //hi2  2
+console.log(s.next(&#39;hi3&#39;).value); //hi3  3
+</code></pre>
+<pre><code class="js">const answers = [
+  `It is certain`,
+  `Yes definitely`,
+  `Most likely`,
+  `Yes`,
+  `Ask again later`,
+  `Better not tell you now`,
+  `Cannot predict now`,
+  `Don&#39;t count on it`,
+  `My sources say no`,
+  `Very doubtful`
+]
+function answer () {
+  return answers[Math.floor(Math.random() * answers.length)]
+}
+console.log(answer()) //每次运行都随机产生一句话
+</code></pre>
+<p>这个时候，可以写一个generator来产生一个无限序列，序列内容就是一个个随机的回答。generator的形式如下：</p>
+<pre><code class="js">//version1
+function* ball(){
+  while(true)
+    yield `[a] ${answer()}`
+}
+const g = ball();
+console.log(g.next().value);
+console.log(g.next().value);//随机产生一个回答
+
+//version2
+function* ball(){
+  let question;
+  while(true){
+    question = yield `[a] ${answer()}`
+    console.log(`[q] ${ question }`)
+  }
+}
+const g = ball()
+g.next();//跳过第一个，因为第一个输入值不会影响输出，具体原因有待回头继续研究
+console.log(g.next(&#39;hello?&#39;).value)//先输出[q],在输出[a]
+console.log(g.next(&#39;hi?&#39;).value)
+</code></pre>
+<blockquote>
+<p>关于generator还有很多内容，有待后续继续挖掘</p>
+</blockquote>
 
         </section>
         <hr>
         
-          <p>上一篇：<a  href = "/2015/09/30/forth/">forth</a></p>
+          <p>上一篇：<a  href = "/2016/11/23/arror/">arrow的疑问</a></p>
         
         
-          <p>下一篇：<a  href = /2016/09/22/My-first-Post/>My first Post</a></p>
+          <p>下一篇：<a  href = /2016/11/24/es66/>es66-内部的扩展</a></p>
         
         
             <section id="comments">
             
                     <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="2015/09/30/third/" data-title="third" data-url="https://yuzai.github.io/2015/09/30/third/"></div>
+<div class="ds-thread" data-thread-key="2016/11/23/es65/" data-title="es5-generator" data-url="https://yuzai.github.io/2016/11/23/es65/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -100,7 +185,7 @@
          <div class = 'well' id = 'ab_ca'>
 
 
-<h4>third</h4>
+<h4>es5-generator</h4>
 
 <h4>归档</h4>
 <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">5</span></li></ul>
