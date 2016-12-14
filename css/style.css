@@ -67,7 +67,7 @@ body { padding-top: 70px; }
 	width:200px;
   height:200px;
 	margin:1% auto;
-	background:url(../rs/m1.jpg) -174px -200px;
+	background:url(../rs/m1.jpg) -200px -10px no-repeat;
 }
 #aboutme{
   list-style-type: none;
