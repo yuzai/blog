@@ -128,7 +128,34 @@ typeof(pElement[1])
 <pre><code class="js">for(var i in pElement[0]){console.log(i)}
 </code></pre>
 <p>输出了一串一串的东西，有index,有style，有onclick,addListener……容我之前没有系统学习，吓我一跳。这么多原本就有的属性，这下我就懂了，为什么在js中可以通过<code>pElement[i].style.color = &#39;blue&#39;</code>有用，其实就是通过给对象增加一个color属性，又或者本来就存在这个属性（又跑去控制台验证了一下：<code>for(var i in pElement[0].style){console.log(i)}</code>,果然又有一堆属性，已经有了color属性）。<strong>但是如果使用<code>pElement[i].style = {&#39;color&#39;:&#39;blue&#39;,&#39;background&#39;:&#39;red&#39;};</code>并不能改变原来的style，具体的原因有待现在还是不太懂，需要后续进行分析。</strong></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>水平还太低了，原生Js都还是没怎么搞清楚，欢迎留言，欢迎指正！</p>
+<h3 id="12-21补充"><a href="#12-21补充" class="headerlink" title="12.21补充"></a>12.21补充</h3><p><strong>最近突然看到了网上一些闭包解决循环绑定问题的方法，突然感觉之前的方法，理论上可行，但是修改了dom元素的属性，有可能某一天，dom的基本属性中增加了该属性，我的代码就不能用了，不得不说，闭包解决这个问题还是很机智的，很好的利用了函数保留上下文的特点。很好用。</strong></p>
+<pre><code class="js">&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;script&gt;
+      function init(){
+        var pElement = document.getElementsByTagName(&#39;p&#39;);
+        //console.log(typeof(pElement[0]));//object
+        for(var i=0;i&lt;pElement.length;i++)
+        {
+          pElement[i].index = i;
+          pElement[i].onclick = (function(i){
+            return function(){alert(i+1)}
+          })(i);
+        }
+      }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body onload = &#39;init()&#39;&gt;
+&lt;p&gt;段落1&lt;/p&gt;
+&lt;p&gt;段落2&lt;/p&gt;
+&lt;p&gt;段落3&lt;/p&gt;
+&lt;p&gt;段落4&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>将一个匿名函数赋值给了pElement[i].onclick，因为这个函数还没有执行，所以内存会开辟一块来存储该匿名函数的上下文，在本例中，就是匿名函数外层的那个函数，保留了他的参数，当onclick触发时，输出的就是当时保留的上下文中的i,也就是对应的段落编号。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>水平还太低了，原生Js都还是没怎么搞清楚，欢迎留言，欢迎指正！<br><strong>12.21补充，之前的方案不好，闭包解决才是最好的方法。</strong></p>
 
         </section>
         <hr>
@@ -168,7 +195,7 @@ typeof(pElement[1])
 
 
 <h4>前端面试：循环绑定click事件</h4>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目重述"><span class="toc-text">题目重述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方案"><span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后的分析"><span class="toc-text">最后的分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目重述"><span class="toc-text">题目重述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方案"><span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后的分析"><span class="toc-text">最后的分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-21补充"><span class="toc-text">12.21补充</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
 <h4>归档</h4>
 <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">5</span></li></ul>
 <h4>最新文章</h4>
