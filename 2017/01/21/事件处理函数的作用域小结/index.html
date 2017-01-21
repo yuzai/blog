@@ -57,33 +57,94 @@
         <div class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1 category_col'>
           <div class ='well'>
         <h1 class='post-title'>
-            <span>es6实用技巧</span>
+            <span>事件处理函数的作用域小结</span>
         </h1>
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
         <section class='post-content'>
-            <p>一些实际使用中经常会碰到的es6的语法,慢慢更新<br><a id="more"></a></p>
-<h3 id="object属性名缩写"><a href="#object属性名缩写" class="headerlink" title="object属性名缩写"></a>object属性名缩写</h3><p>当在定义object的时候，如果对属性值采用变量赋值的方法，当变量名和属性名相同时，可以只写一次。</p>
-<pre><code class="js">const name = &#39;xiaobo&#39;
-const person={
-  name,
-  age:16
-};
-console.log(person.name);//xiaobo
+            <p>对事件绑定函数的this指向以及作用域进行简单的总结<br><a id="more"></a><br>最近在写程序的时候，一直有一个疑问，就是 <strong>事件处理函数在绑定之后，该事件绑定的回调函数的this的指向以及该函数可以访问的作用域是怎么样的</strong> 。今天有空做了一下测试，总结一下：<br><strong>1. 事件处理函数绑定之后，this指向该事件绑定的元素。</strong><br><strong>2. 事件处理函数可以访问的作用域：包括了该绑定发生时的上下文。</strong></p>
+<h3 id="this的测试"><a href="#this的测试" class="headerlink" title="this的测试"></a>this的测试</h3><p>这个测试很简单，写一个html代码对this进行输出就可以验证this的指向。我的测试代码如下。body onload触发init函数，对body绑定了onclick函数，该函数输出this的值，结果表明输出的就是body节点。所以在事件处理函数中，this指向绑定的元素，当然，用bind是可以修改this的指向。</p>
+<pre><code class="html">&lt;html&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;/head&gt;
+
+&lt;body onload = &#39;init()&#39;&gt;
+    &lt;p&gt;给body绑定了onclick事件&lt;/p&gt;
+    &lt;p&gt;点击body&lt;/p&gt;
+    &lt;p&gt;在控制台输出this的值&lt;/p&gt;
+    &lt;script&gt;
+        var obj = {
+          name:&#39;xiaobo&#39;,
+          age:&#39;23&#39;
+        };
+        function init() {
+            document.body.onclick = function() {
+                console.log(this)//body
+            };
+        }
+        // function init() {
+        //     document.body.onclick = function() {
+        //         console.log(this)//obj
+        //     }.bind(obj);
+        // }
+    &lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
 </code></pre>
+<h3 id="作用域测试"><a href="#作用域测试" class="headerlink" title="作用域测试"></a>作用域测试</h3><p>在js中，函数的作用域往往是内部的函数可以访问外部函数的作用域，而外部的函数无法访问内部的作用域，能够访问外部函数作用域的函数也成为闭包。事件绑定操作有DOM2，DOM0，IE的方法，不论用哪种方法，都可以进行绑定，我的疑问在于绑定的事件处理函数，它的作用域是哪里，能不能访问外部函数的作用域。为了了解这一点，我做了下面这个测试。</p>
+<pre><code class="html">&lt;html&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;/head&gt;
+
+&lt;body onload = &#39;init()&#39;&gt;
+    &lt;p&gt;给body绑定了onclick事件&lt;/p&gt;
+    &lt;p&gt;点击body&lt;/p&gt;
+    &lt;p&gt;在控制台输出this的值&lt;/p&gt;
+    &lt;script&gt;
+        var obj = {
+          name:&#39;xiaobo&#39;,
+          age:&#39;23&#39;
+        };
+        function init() {
+            var obj2 = {
+              name:&#39;xiaobo2&#39;,
+              age:&#39;25&#39;
+            }
+            document.body.onclick = function() {
+                console.log(obj2);//obj2
+                console.log(obj);//obj
+            };
+        }
+        // function init() {
+        //     document.body.onclick = function() {
+        //         console.log(this)
+        //     }.bind(obj);
+        // }
+    &lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+<p>在上述代码中，body.onclick的事件处理函数，输出了init函数中定义的obj2,全局定义的obj，均能进行输出，证明onclick的回调函数继承了事件绑定的上下文，也就是事件处理函数（回调函数）能够拥有事件绑定的时候的上下文（本例中，事件是在init函数中进行绑定，所以回调函数继承了init这个作用域，能够访问到obj2）同时，Init本身也是定义在全局中，所以回调函数也可以访问到全局作用域。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>通过这两个测试，可以很明显的看出来this的指向以及上下文的继承，虽然在上面只列出了采用DOM0进行事件绑定的例子，但是DOM2的事件回调中this和上下文的继承关系都是这样的，IE中没有进行测试。IE嘛。。。</p>
 
         </section>
         <hr>
         
-          <p>上一篇：<a  href = "/2016/11/28/最近的心情/">最近的心情</a></p>
+          <p>上一篇：<a  href = "/2016/11/29/es6实用技巧/">es6实用技巧</a></p>
         
         
-          <p>下一篇：<a  href = /2017/01/21/事件处理函数的作用域小结/>事件处理函数的作用域小结</a></p>
+          <p>下一篇：<a onclick = 'return false'>没有了</a></p>
         
         
             <section id="comments">
             
                     <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="2016/11/29/es6实用技巧/" data-title="es6实用技巧" data-url="https://yuzai.github.io/2016/11/29/es6实用技巧/"></div>
+<div class="ds-thread" data-thread-key="2017/01/21/事件处理函数的作用域小结/" data-title="事件处理函数的作用域小结" data-url="https://yuzai.github.io/2017/01/21/事件处理函数的作用域小结/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -108,8 +169,8 @@ console.log(person.name);//xiaobo
          <div class = 'well' id = 'ab_ca'>
 
 
-<h4>es6实用技巧</h4>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#object属性名缩写"><span class="toc-text">object属性名缩写</span></a></li></ol>
+<h4>事件处理函数的作用域小结</h4>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#this的测试"><span class="toc-text">this的测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作用域测试"><span class="toc-text">作用域测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
 <h4>归档</h4>
 <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li></ul>
 <h4>最新文章</h4>
