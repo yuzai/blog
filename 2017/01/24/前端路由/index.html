@@ -57,83 +57,78 @@
         <div class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1 category_col'>
           <div class ='well'>
         <h1 class='post-title'>
-            <span>ajax本地通信</span>
+            <span>前端路由的实现方式</span>
         </h1>
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ajax/">ajax</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
         <section class='post-content'>
-            <p>最近在学习es6的promise，已经看了第2遍了，这次看过感觉有点懂了，去阮一峰的es6教程上又看了一下，有两个例子，一个是异步加载图片，一个是ajax。对异步加载图片还是不太懂，但是ajax我总会吧，就尝试用promise+ajax试下笔，结果。。。。<br>发个文章，记录今天苦逼的一天。<br><a id="more"></a></p>
-<h3 id="ajax通信代码"><a href="#ajax通信代码" class="headerlink" title="ajax通信代码"></a>ajax通信代码</h3><p>ajax用原生的Js来实现的话，其实核心是利用XMLHttpRequest对象，可以进行get和post通信，这不是今天的问题，问题是用谷歌浏览器的时候报错。源代码如下：回头一定研究一下如何让静态网页代码高亮。</p>
-<pre><code class="html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-
-&lt;head&gt;
-    &lt;meta charset=&#39;utf-8&#39;&gt;
-    &lt;script&gt;
-        function loadXml() {
-            const xmlhttp= new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                console.log(xmlhttp.readyState);
-                console.log(xmlhttp.status);
-                if (xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200) {
-                    document.getElementById(&quot;myDiv&quot;).innerHTML = xmlhttp.responseText;
-                }
-            }
-            xmlhttp.open(&quot;GET&quot;, &quot;flex.html&quot;, true);
-            xmlhttp.send();
-        }
-    &lt;/script&gt;
-&lt;/head&gt;
-
-&lt;body&gt;
-  &lt;div id=&#39;myDiv&#39;&gt;&lt;h2&gt;test on ajax&lt;/h2&gt;&lt;/div&gt;
-  &lt;button type=&#39;button&#39; onclick=&#39;loadXml()&#39;&gt;修改内容&lt;/button&gt;
-&lt;/body&gt;
-
-&lt;/html&gt;
-</code></pre>
-<p>上述代码定义了一个XMLHttpRequest对象，通过open和send方法实现了对本地flex.html的通信，获取其中的信息并写入到DOM的myDiv中去，当用chrome的时候，时始终提示Load出错，没有权限，但是用firefox就没有问题，所以去网上搜索了一下，其实是chrome为了安全，禁止了网页与系统文件的ajax，所以只需要在chrome的快捷方式上加入–allow-file-access-from-files选项就可以了。如下图：</p>
-<p><img src="http://blog.xiaoboma.com/设置.jpg" alt="图一"></p>
-<p>要吐槽的地方其实是，我改了很多遍，浏览器重启了很多遍，都没有成功，最后发现竟然是因为我在另一个桌面上一直开着chrome，（win10多桌面），导致了一直失败，最后，修改了这里，终于没报错了，然而还是没有效果，所以把xmlhttp.status的值输出了一下，发现输出是0，去网上搜了一下，这个是因为本地通信，所以是0.但是在firefox中依旧是200。</p>
-<h3 id="promise-ajax"><a href="#promise-ajax" class="headerlink" title="promise+ajax"></a>promise+ajax</h3><p>吐槽完，还是得把该做的工作做完，用promise+ajax来实现更高端的效果。promise其实是回调函数的更优雅的写法，它的写法更加易懂并且简单。</p>
-<pre><code class="js">function loadXml() {
-    const p = new Promise((resolve, reject) =&gt; {
-        const xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = handler;
-        xmlhttp.open(&quot;GET&quot;, &quot;flex.html&quot;, true);
-        xmlhttp.send();
-
-        function handler() {
-            if (this.readyState !== 4) {
-                return;
-            }
-            if (this.status === 200) {
-                resolve(this.response);
-            } else {
-                reject(new Error(this.status));
-            }
-        }
-    });
-    p.
-    then(data =&gt; document.getElementById(&quot;myDiv&quot;).innerHTML = data).
-    catch(data =&gt; document.getElementById(&quot;myDiv&quot;).innerHTML = data);
+            <p>最近一直在研究前后端分离，ajax可以很好的解决前后端分离的问题，但是又存在着浏览器无法前进后退，这个问题比较尴尬。但是采用前端路由的方式可以很好的解决这个问题。<br><a id="more"></a></p>
+<h3 id="前端路由与单页页面"><a href="#前端路由与单页页面" class="headerlink" title="前端路由与单页页面"></a>前端路由与单页页面</h3><p>路由就是指随着浏览器地址栏的变化，展示给用户的页面也不相同。<br>传统的网页根据用户访问的不同的地址，浏览器从服务器获取对应页面的内容展示给用户。这样造成服务器压力比较大，而且用户访问速度也比较慢。在这种场景下，出现了单页应用。<br>单页应用，就是只有一个页面，用户访问一个网址，服务器返回的页面始终只有一个，不管用户改变了浏览器地址栏的内容或者在页面内发生了跳转，服务器不会重新返回新的页面，而是通过相应的js操作来实现页面的更改。而地址栏内容的改变，显示不同的页面，实现的手段就是前端路由。</p>
+<h3 id="前端路由的实现方式"><a href="#前端路由的实现方式" class="headerlink" title="前端路由的实现方式"></a>前端路由的实现方式</h3><p>前端路由主要由两种方式实现：</p>
+<ol>
+<li>location.hash+hashchange事件</li>
+<li>history.pushState()+popState事件</li>
+</ol>
+<h4 id="hash-hashchange实现"><a href="#hash-hashchange实现" class="headerlink" title="hash+hashchange实现"></a>hash+hashchange实现</h4><p>这种方法的好处在于支持IE浏览器。对早期的一些浏览器的支持比较好。<br>实现原理：<br>location.hash始终指向页面url 中#之后的内容<br>当当前页面的url =’www.baidu.com’,可以在浏览器的控制台输入location.hash为空，当页面指向url =’www.baidu.com/#/hello’的时候，location.hash = ‘#/hello’。通过读取location.hash可以知道当前页面所处的位置。通过hashchange事件可以监听location.hash的变化，从而进行相应的处理即可。<br>那么如何触发hash的改变呢？这里主要由两种方法：</p>
+<ol>
+<li>设置a标签，href = ‘#/blue’，当点击标签的时候，可以在当前url的后面增加上’#/blue’，同时触发hashchange,再回调函数中进行处理。</li>
+<li>直接在js中对location.hash = ‘#/blue’即可，此时url会改变，也会触发hashchange事件。<br>下面给出一个通用的hash前端路由的实现方案：</li>
+</ol>
+<pre><code class="js">function Router(){
+  this.currentUrl=&#39;&#39;;
+  this.routes={};
+}
+Router.prototype.route = function(path,callback){
+  this.routes[path] = callback || function(){}
+}
+Router.prototype.refresh = function(){
+  this.currentUrl = location.hash.slice(1) || &#39;/&#39;;
+  this.routes[this.currentUrl]();
+}
+Router.prototype.init = function(){
+  window.addEventListener(&#39;load&#39;,this.refresh.bind(this),false);
+  window.addEventListener(&#39;hashchange&#39;,this.refresh.bind(this),false);
+  // console.log(location.hash)
+  // if(location.hash.slice(1)!==&#39;/&#39;)
+  //     location.hash = &#39;#/&#39;;
 }
 </code></pre>
-<p>上面代码通过新建一个Promise,内部使用xmlhttp.onreadystatechange来触发不同的resolver,通过绑定then和catch来完成不同的功能。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本地ajax通信，只需要在chrome进行简单的快捷方式修改就可以了，Promise类似回调，但是写起来更加方便，尤其是当级联的时候（本程序没有体现）。</p>
+<p>上述定义了一个Router对象，在实例中可以这么使用：</p>
+<pre><code class="js">var route = new Router();
+route.init();
+function changecolor(color){
+  var body = document.getElementsByTagName(&#39;body&#39;)[0];
+  body.style[&#39;background-color&#39;] = color;
+}
+route.route(&#39;/&#39;,changecolor.bind(null,&#39;skyblue&#39;));
+route.route(&#39;/blue&#39;,changecolor.bind(null,&#39;blue&#39;));
+route.route(&#39;/green&#39;,changecolor.bind(null,&#39;green&#39;));
+route.route(&#39;/color&#39;,function(){
+  var p= document.getElementsByTagName(&#39;a&#39;);
+  [].forEach.call(p,function(item){item.style[&#39;color&#39;] = &#39;#&#39;+((~~(Math.random()*(1&lt;&lt;24))).toString(16));})
+});
+</code></pre>
+<p>新建一个Router的实例，进行初始化，然后进行url与callback的绑定，就可以在hash发生改变的时候出发触发相应的callback。这种方式支持浏览器的前进与后退。很好的解决了前后端分离之后的问题。这种方式有一个缺点就是#的存在，让一些人看了觉得不是很舒服，所以html给history新增了一些api，从而以一种更优雅的方式实现前端路由。</p>
+<h4 id="history-pushState-popstate"><a href="#history-pushState-popstate" class="headerlink" title="history.pushState()+popstate"></a>history.pushState()+popstate</h4><p>跟之前的方法一样,pushState()修改url的地址，popstate监听地址的改变，不同的是，手动的进行pushState()并不会触发popstate事件。<br>可以这样理解：</p>
+<ol>
+<li>用户点击了某个链接，触发ajax获取新的页面或者触发js中的某些操作，改变了dom结构。</li>
+<li>我们希望保存上一个页面，这时候我们就使用pushState(data,null,url)来将上一个页面的信息保存下来。</li>
+<li>当用户点击浏览器的前进或者后退的时候，触发popstate事件，可以读取到数据，然后进行该页面的操作或者ajax获取该页面的数据，也可以通过pushState()中的data来进行还原、更新。</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>时间关系，写的比较着急，关于history的实例还没有提供，后续有空写了之后会再进行补充。</p>
 
         </section>
         <hr>
         
-          <p>上一篇：<a  href = "/2016/11/15/es6/">es6笔记</a></p>
+          <p>上一篇：<a  href = "/2017/01/21/事件处理函数的作用域小结/">事件处理函数的作用域小结</a></p>
         
         
-          <p>下一篇：<a  href = /2016/11/22/es63/>es6笔记三</a></p>
+          <p>下一篇：<a onclick = 'return false'>没有了</a></p>
         
         
             <section id="comments">
             
                     <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="2016/11/22/ajax本地通信/" data-title="ajax本地通信" data-url="https://yuzai.github.io/2016/11/22/ajax本地通信/"></div>
+<div class="ds-thread" data-thread-key="2017/01/24/前端路由/" data-title="前端路由的实现方式" data-url="https://yuzai.github.io/2017/01/24/前端路由/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -158,8 +153,8 @@
          <div class = 'well' id = 'ab_ca'>
 
 
-<h4>ajax本地通信</h4>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#ajax通信代码"><span class="toc-text">ajax通信代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#promise-ajax"><span class="toc-text">promise+ajax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+<h4>前端路由的实现方式</h4>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前端路由与单页页面"><span class="toc-text">前端路由与单页页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前端路由的实现方式"><span class="toc-text">前端路由的实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#hash-hashchange实现"><span class="toc-text">hash+hashchange实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#history-pushState-popstate"><span class="toc-text">history.pushState()+popstate</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
 <h4>归档</h4>
 <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li></ul>
 <h4>最新文章</h4>
