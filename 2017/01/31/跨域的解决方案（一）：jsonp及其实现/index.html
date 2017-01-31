@@ -62,8 +62,9 @@
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
         <section class='post-content'>
             <p>最近遇到了跨域问题，有很多种解决方案，本文主要对其中的jsonp进行演示，本文使用node编写服务器端代码进行测试。<br><a id="more"></a></p>
-<h3 id="jsonp的来历"><a href="#jsonp的来历" class="headerlink" title="jsonp的来历"></a>jsonp的来历</h3><p>ajax中的资源访问受到浏览器安全的’同源’限制,存在跨域问题。<br>但是script标签的引入并不具有’同源’限制,不存在跨域问题，利用这个特性进行数据的获取，就是jsonp。<br>JSONP(JSON with Padding)是一个非官方的协议，它允许在服务器端集成Script tags返回至客户端，通过javascript callback的形式实现跨域访问（这仅仅是JSONP简单的实现形式）。<br>简单的一句话：jsonp是一个协议，由于同源策略的限制，XmlHttpRequest只允许请求当前源（域名、协议、端口）的资源，为了实现跨域请求，可以通过script标签实现跨域请求，然后在服务端输出JSON数据并执行回调函数，从而解决了跨域的数据请求。</p>
-<h3 id="jsonp的实现"><a href="#jsonp的实现" class="headerlink" title="jsonp的实现"></a>jsonp的实现</h3><p>从上文可知，jsonp的实现需要客户端代码和服务器端代码共同努力。先从客户端代码说起。<br>script标签不受跨域资源请求的影响，可以通过增加callback参数将回调函数传递，与服务器端配合从而在资源加载之后执行该回调函数,客户端关键部分写法如下：</p>
+<h3 id="jsonp的来历"><a href="#jsonp的来历" class="headerlink" title="jsonp的来历"></a>jsonp的来历</h3><p>ajax中的资源访问受到浏览器安全的<a href="http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html" target="_blank" rel="external">‘同源’限制</a>,存在跨域问题。<br>但是script标签的引入并不具有’同源’限制,不存在跨域问题，利用这个特性进行数据的获取，就是jsonp。<br>JSONP(JSON with Padding)是一个非官方的协议，它允许在服务器端集成Script tags返回至客户端，通过javascript callback的形式实现跨域访问（这仅仅是JSONP简单的实现形式）。<br>简单的一句话：jsonp是一个协议，由于同源策略的限制，XmlHttpRequest只允许请求当前源（域名、协议、端口）的资源，为了实现跨域请求，可以通过script标签实现跨域请求，然后在服务端输出JSON数据并执行回调函数，从而解决了跨域的数据请求。</p>
+<h3 id="jsonp的实现"><a href="#jsonp的实现" class="headerlink" title="jsonp的实现"></a>jsonp的实现</h3><p>从上文可知，jsonp的实现需要客户端代码和服务器端代码共同努力。整体的思路如下图：<br><img src="http://upload-images.jianshu.io/upload_images/3967512-4a0c232f37c44707.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p>script标签不受跨域资源请求的影响，可以通过增加callback参数将回调函数传递，与服务器端配合从而在资源加载之后执行该回调函数,客户端关键部分写法如下：</p>
 <pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;body&gt;
     &lt;h1&gt;测试jsonp&lt;/h1&gt;
@@ -101,6 +102,7 @@ if(urlPath === &#39;/jsonp&#39; &amp;&amp; qs.callback){
 <li><a href="http://www.cnblogs.com/giggle/p/5496596.html" target="_blank" rel="external">借助node实战JSONP跨域</a></li>
 <li><a href="https://gold.xitu.io/post/5815f4abbf22ec006893b431" target="_blank" rel="external">前端跨域整理
 </a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html" target="_blank" rel="external">浏览器同源政策及其规避方法</a></li>
 </ol>
 
         </section>
