@@ -51,80 +51,68 @@
 </header>
 
 <div style = 'margin-top:180px'>
-    <article>
-      <div class = 'container-fluid'>
-      <div class = 'row'>
-        <div class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1 category_col'>
-          <div class ='well'>
-        <h1 class='post-title'>
-            <span>arrow的疑问</span>
-        </h1>
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/疑问/">疑问</a></li></ul>
-        <section class='post-content'>
-            <p>学会使用es6的箭头函数之后，在几乎所有需要用到匿名函数的地方都改为了箭头函数，this绑定外部函数的this无往不利，但是最近遇到了一个问题。<br><a id="more"></a></p>
-<p>对象的方法定义时，箭头函数的this值应该是什么？</p>
-<pre><code class="js">//code1
-var s={
-}
-s.fun=()=&gt;{console.log(this)} //严格模式下undefined，浏览器控制台输出window
-//s.fun=function(){console.log(this)}//[object:s]
-s.fun();
-//code2
-var s={
-  fun:()=&gt;console.log(this)//严格模式下undefined，浏览器控制台输出window
-  //fun:function(){console.log(this)}//[object:s]
-}
-s.fun();
-</code></pre>
-<p>上述代码表示，在定义对象的方法时，使用箭头函数，this没有绑定(严格模式下undefined，非严格模式时是window).<br>翻看了箭头函数的说明，对this的说明是，this会继承外部的this，也就是 <strong>如果在函数内部定义了箭头函数，箭头函数的this值是等于该函数的this值，而在定义对象的时候，外部的函数并不存在，它的外部就是全局，所以this会指向window或者undefined。</strong></p>
-<blockquote>
-<p>知识欠缺太多了，还需继续努力</p>
-</blockquote>
-<p>欢迎批评指正</p>
-
-        </section>
+<div class = 'container-fluid'>
+  <div class = 'row'>
+  <div class = 'col-xs-12 col-xs-offset-0 col-md-5 col-md-offset-2 col-sm-5 col-sm-offset-2 col-lg-5 col-lg-offset-2 category_col'>
+    <div class = 'well'>
+    <div class="archive">
+      <div style = 'text-align:right'>
+        <button type="button" class="btn btn-primary" id='but1'>目录视图</button>
+        <button type="button" class="btn btn-success" id='but2'>摘要视图</button>
         <hr>
-        
-          <p>上一篇：<a  href = "/2016/11/23/es64/">es64</a></p>
-        
-        
-          <p>下一篇：<a  href = /2016/11/23/es65/>es5-generator</a></p>
-        
-        
-            <section id="comments">
-            
-                    <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="2016/11/23/arror/" data-title="arrow的疑问" data-url="https://yuzai.github.io/2016/11/23/arror/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    var duoshuoQuery = {short_name:'yuzaizai'};
-      (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-  </script>
-<!-- 多说公共JS代码 end -->
 
-                
-            </section>
+      </div>
+      
+      
+      <div id = archive1>
+      
+      
         
+        
+        
+          <h2 class="year">2017</h2 >
+          
+        
+        <div class="archive_item">
+          <div class = 'row'>
+            <div class = 'col-lg-8 col-sm-8 col-md-8 col-xs-8' style='white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>
+          <a class="title" href="/2017/02/01/跨域的解决方案(二)：CORS策略的介绍及实现/" title = '跨域的解决方案(二)：CORS策略的介绍及实现'>跨域的解决方案(二)：CORS策略的介绍及实现</a>
+        </div>
+        <div class = 'col-lg-4 col-sm-4 col-md-4 col-xs-4'>
+          <span class="date"><i class='icon-calendar'></i> 2017-02-01</span>
+            </div>
           </div>
-       </div>
-       <div class = 'col-xs-12 col-xs-offset-0 col-md-3 col-md-offset-0 col-sm-3 col-sm-offset-0 col-lg-3 col-lg-offset-0'>
-         <div class = 'well' id = 'ab_ca'>
+        </div>
+      
+    </div>
+    <div id='archive2' style = 'display:none'>
+      
+        
+          <h4 class="post-title">
+            <i class='icon-book'> </i>
+            <a href="/2017/02/01/跨域的解决方案(二)：CORS策略的介绍及实现/">跨域的解决方案(二)：CORS策略的介绍及实现</a>
+          </h4>
+          
+      <h6 class="date"><i class='icon-calendar'> </i>2017-02-01</h6> 	
+      <section class="md post-content">
+          
+              <p>最近遇到了跨域问题，有很多种解决方案，本文主要对其中的CORS进行演示，本文使用node编写服务器端代码进行验证。在解决该问题的时候，顺带对cookie的操作进行了一定的说明。<br>
+          
+      </section>
+      
+          <div style = 'text-align:right'>
+          <a href="/2017/02/01/跨域的解决方案(二)：CORS策略的介绍及实现/" class="more btn-lg">详细</a>
+        </div>
+      
+      <hr>
+      
+    </div>
+    </div>
+  </div>
+  </div>
+  <div class = 'col-xs-12 col-xs-offset-0 col-md-3 col-md-offset-0 col-sm-4 col-sm-offset-0 col-lg-3 col-lg-offset-0'>
+    <div class = 'well' id = 'ab_ca'>
 
-
-<h4>arrow的疑问</h4>
-
-<h4>归档</h4>
-<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li></ul>
-<h4>最新文章</h4>
-<ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/跨域的解决方案(二)：CORS策略的介绍及实现/">跨域的解决方案(二)：CORS策略的介绍及实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/31/跨域的解决方案（一）：jsonp及其实现/">跨域的解决方案（一）：jsonp及其实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/es6实用技巧/">es6实用技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/javascript垃圾收集和内存泄漏/">javascript垃圾收集和内存泄漏</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/24/原生js封装ajax/">原生javascript封装ajax</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/24/前端路由/">前端路由的实现方式</a></li></ul>
 
 <h4>分类</h4>
 <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/创作/">创作</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
@@ -145,13 +133,12 @@ s.fun();
 
 
 
+
 </div>
 
-      </div>
-      </div>
-
-      </div>
-    </article>
+</div>
+  </div>
+</div>
 
 </div>
 <div style="position:fixed;right:1%;bottom:1%">
@@ -172,8 +159,8 @@ s.fun();
     
     <script src="/js/general.js"></script>
     
+    <script src="/js/category.js"></script>
     
-    <script src="/js/post.js"></script>
     
     <script src="/js/tag.js"></script>
     
