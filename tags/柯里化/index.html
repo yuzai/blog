@@ -51,78 +51,71 @@
 </header>
 
 <div style = 'margin-top:180px'>
-    <article>
-      <div class = 'container-fluid'>
-      <div class = 'row'>
-        <div class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1 category_col'>
-          <div class ='well'>
-        <h1 class='post-title'>
-            <span>es6实用技巧</span>
-        </h1>
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li></ul>
-        <section class='post-content'>
-            <p>一些实际使用中经常会碰到的es6的语法,慢慢更新.<br>(2017.01.30更新)<br><a id="more"></a></p>
-<h3 id="object属性名缩写"><a href="#object属性名缩写" class="headerlink" title="object属性名缩写"></a>object属性名缩写</h3><p>当在定义object的时候，如果对属性值采用变量赋值的方法，当变量名和属性名相同时，可以只写一次。</p>
-<pre><code class="js">const name = &#39;xiaobo&#39;
-const person={
-  name,
-  age:16
-};
-console.log(person.name);//xiaobo
-</code></pre>
-<h3 id="判断一个变量是否是数组"><a href="#判断一个变量是否是数组" class="headerlink" title="判断一个变量是否是数组"></a>判断一个变量是否是数组</h3><p>这个方法属于对Array类型的一个扩展</p>
-<pre><code class="js">  var obj ={
-    name:&#39;xiaobo&#39;,
-    age:24
-  }
-  console.log(Array.isArray(obj));//false
-  console.log(Array.isArray([1,2,3,[1,2,3]]);//true
-</code></pre>
-
-        </section>
+<div class = 'container-fluid'>
+  <div class = 'row'>
+  <div class = 'col-xs-12 col-xs-offset-0 col-md-5 col-md-offset-2 col-sm-5 col-sm-offset-2 col-lg-5 col-lg-offset-2 category_col'>
+    <div class = 'well'>
+    <div class="archive">
+      <div style = 'text-align:right'>
+        <button type="button" class="btn btn-primary" id='but1'>目录视图</button>
+        <button type="button" class="btn btn-success" id='but2'>摘要视图</button>
         <hr>
-        
-          <p>上一篇：<a  href = "/2017/01/26/javascript垃圾收集和内存泄漏/">javascript垃圾收集和内存泄漏</a></p>
-        
-        
-          <p>下一篇：<a  href = /2017/01/31/跨域的解决方案（一）：jsonp及其实现/>跨域的解决方案（一）：jsonp及其实现</a></p>
-        
-        
-            <section id="comments">
-            
-                    <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="2017/01/30/es6实用技巧/" data-title="es6实用技巧" data-url="https://yuzai.github.io/2017/01/30/es6实用技巧/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    var duoshuoQuery = {short_name:'yuzaizai'};
-      (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-  </script>
-<!-- 多说公共JS代码 end -->
 
-                
-            </section>
+      </div>
+      
+      
+      <h3>tags：柯里化</h3>
+      
+      <div id = archive1>
+      
+      
         
+        
+        
+          <h2 class="year">2017</h2 >
+          
+        
+        <div class="archive_item">
+          <div class = 'row'>
+            <div class = 'col-lg-8 col-sm-8 col-md-8 col-xs-8' style='white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>
+          <a class="title" href="/2017/02/17/函数柯里化小结/" title = '函数柯里化小结'>函数柯里化小结</a>
+        </div>
+        <div class = 'col-lg-4 col-sm-4 col-md-4 col-xs-4'>
+          <span class="date"><i class='icon-calendar'></i> 2017-02-17</span>
+            </div>
           </div>
-       </div>
-       <div class = 'col-xs-12 col-xs-offset-0 col-md-3 col-md-offset-0 col-sm-3 col-sm-offset-0 col-lg-3 col-lg-offset-0'>
-         <div style='overflow:scroll' id='bfc'>
+        </div>
+      
+    </div>
+    <div id='archive2' style = 'display:none'>
+      
+        
+          <h4 class="post-title">
+            <i class='icon-book'> </i>
+            <a href="/2017/02/17/函数柯里化小结/">函数柯里化小结</a>
+          </h4>
+          
+      <h6 class="date"><i class='icon-calendar'> </i>2017-02-17</h6> 	
+      <section class="md post-content">
+          
+              <p>最近学习了一下高阶函数，其中印象比较深刻的有函数消抖，函数节流以及函数柯里化（curry），在学习中也是从一头雾水到逐渐明了，所以写一篇文章对柯里化进行总结。<br>
+          
+      </section>
+      
+          <div style = 'text-align:right'>
+          <a href="/2017/02/17/函数柯里化小结/" class="more btn-lg">详细</a>
+        </div>
+      
+      <hr>
+      
+    </div>
+    </div>
+  </div>
+  </div>
+  <div class = 'col-xs-12 col-xs-offset-0 col-md-3 col-md-offset-0 col-sm-4 col-sm-offset-0 col-lg-3 col-lg-offset-0'>
+    <div style='overflow:scroll' id='bfc'>
 <div class = 'well' id = 'ab_ca'>
 
-
-<h4>es6实用技巧</h4>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#object属性名缩写"><span class="toc-text">object属性名缩写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断一个变量是否是数组"><span class="toc-text">判断一个变量是否是数组</span></a></li></ol>
-<h4>归档</h4>
-<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li></ul>
-<h4>最新文章</h4>
-<ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/函数柯里化小结/">函数柯里化小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/跨域的解决方案(二)：CORS策略的介绍及实现/">跨域的解决方案(二)：CORS策略的介绍及实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/31/跨域的解决方案（一）：jsonp及其实现/">跨域的解决方案（一）：jsonp及其实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/es6实用技巧/">es6实用技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/javascript垃圾收集和内存泄漏/">javascript垃圾收集和内存泄漏</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/24/原生js封装ajax/">原生javascript封装ajax</a></li></ul>
 
 <h4>分类</h4>
 <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/创作/">创作</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li></ul>
@@ -143,14 +136,13 @@ console.log(person.name);//xiaobo
 
 
 
+
 </div>
 </div>
 
-      </div>
-      </div>
-
-      </div>
-    </article>
+</div>
+  </div>
+</div>
 
 </div>
 <div style="position:fixed;right:1%;bottom:1%">
@@ -171,8 +163,8 @@ console.log(person.name);//xiaobo
     
     <script src="/js/general.js"></script>
     
+    <script src="/js/category.js"></script>
     
-    <script src="/js/post.js"></script>
     
     <script src="/js/tag.js"></script>
     
