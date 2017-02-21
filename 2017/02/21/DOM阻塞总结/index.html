@@ -57,147 +57,67 @@
         <div class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1 category_col'>
           <div class ='well'>
         <h1 class='post-title'>
-            <span>es6笔记三</span>
+            <span>DOM阻塞总结</span>
         </h1>
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DOM/">DOM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
         <section class='post-content'>
-            <p>es6的学习笔记(三)<br><a id="more"></a></p>
-<h3 id="promise"><a href="#promise" class="headerlink" title="promise"></a>promise</h3><blockquote>
-<p>promise，按照我的理解来说，是一种异步回调更优雅的写法</p>
-<p>An alternative to callbacks and events</p>
-</blockquote>
-<p>fetch(‘/items’)类似于ajax中的get，不过返回值是一个promise.</p>
-<pre><code class="js">fetch(&#39;/items&#39;).then(
-  //do something
-  ()=&gt;console.log(&#39;hello&#39;)//此处加;是会报错的，一句话的箭头函数不应该有分号
-)
-</code></pre>
-<pre><code class="js">//写法一
-const p = fetch(&#39;/items&#39;)
-p.then(res =&gt; {
-// handle response
-})
-p.catch(error =&gt; {
-// handle error
-})
-//写法二
-const p = fetch(&#39;/items&#39;)
-p.then(
-res =&gt; {
-// handle response
-},
-err =&gt; {
-// handle error
-}
-) //上述两种写法是等价的
-</code></pre>
-<p>then和catch函数分别处理p的正确和错误。.then和.catch的返回值均是一个Promise，所以它的级联(chaining)变得很简单。</p>
-<pre><code class="js">p.then(null, error =&gt; {
-// handle error
-})//此写法等价于p.catch(error=&gt;{})
-</code></pre>
-<h4 id="promise的创建方法"><a href="#promise的创建方法" class="headerlink" title="promise的创建方法"></a>promise的创建方法</h4><ol>
-<li>使用new Promise创建。Promise本质上是一个对象，可以使用New字符进行创建</li>
-</ol>
-<pre><code class="js">new Promise(function(resolve,reject){
-  setTimeout(function(){
-    if(Math.random()&gt;0.5)
-      resolve(&#39;random success&#39;);
-    else
-      reject(new Error(&#39;failed&#39;));
-    },1000);
-  }).then(data=&gt;console.log(data),err=&gt;console.log(err));
-</code></pre>
+            <p>要找实习了，要准备面试了。拿出之前积攒的一些问题点一个一个进行深入的研究，就碰到了这个，<a href="https://gold.xitu.io/post/587f4afb61ff4b00651b3c18" target="_blank" rel="external">一个微信面试题引发的血案 –[译] 什么阻塞了 DOM？</a>。浏览器是怎么样加载css,js,图片的？这个问题卡在这里，当我在写html的时候，引入一个css,script标签，不禁会想到，这个东西会不会阻塞我页面的展示，放在这个位置行吗？困扰了我很久，狠下心来一定要把这个问题搞清楚，不然写代码迷迷糊糊的。<br><a id="more"></a></p>
+<h2 id="浏览器解析html机制"><a href="#浏览器解析html机制" class="headerlink" title="浏览器解析html机制"></a>浏览器解析html机制</h2><p>这个问题水比较深，我看了不少文章，解释的都还行，大体都是dom树的构建，css的渲染，但是并没有解决我的疑惑，在我困惑的一些细节上真心不敢恭维。其实，作为一名前端开发者（。。。好吧，自称前端开发者），我关注的点其实很明确：</p>
 <ol>
-<li>也可以使用Promise.resolve和.reject直接创建，这种形式的Promise会直接执行。</li>
+<li>我引入的css会被异步下载还是同步下载，css下载之后是怎么解析的，解析是并行的还是先建一个数据结构存储样式，最后dom树弄完了才进行全部的套用？</li>
+<li>我引入的script是同步下载还是异步下载，script执行的时候会不会暂停Dom树的构建，我的DOMContentLoaded（对应jq中的$().ready）还有onload事件到底是什么时候触发？</li>
+<li>我引入的图片呢？这些应该是异步的吧，没有必要让dom解析去等待吧？</li>
 </ol>
-<pre><code class="js">Promise.resolve({result:&#39;false&#39;}).then((data)=&gt;console.log(data.result))//这种形式的Promise会立即执行，结束后执行then里面的函数
-</code></pre>
-<h4 id="then，catch函数的返回值"><a href="#then，catch函数的返回值" class="headerlink" title="then，catch函数的返回值"></a>then，catch函数的返回值</h4><p>在一个then或者catch中，函数可以返回一个数值，抛出一个err，或者返回一个thenable的对象。<br>不论resolve的返回值是什么，均会执行下一个then函数，因为使用了resole)，而reject的返回值不论是什么，都会执行catch，而then和catch是根据其返回值（reaction）来决定下一步执行then还是catch函数。</p>
+<p>我对浏览器做的工作的一些理解用一句话来说，就 <strong>是下载我的资源，解析，生成一个dom树，一个css规则树，然后合成render tree，然后画图，展示到用户面前。DOM Tree 》Render Tree》layout》paint</strong></p>
+<p>下面是一些详细的说明，基本能解决上述的问题：</p>
 <ol>
-<li>当返回值是一个数值的时候：其返回值会作为下一个then函数的输入数据，不会触发catch函数。如下面的代码，第一个resolve的返回值是数值2<br>之后执行then,返回2*7=14，因为返回了一个数值，继续执行下面的then，一直到最后，输出x=11。</li>
+<li>浏览器下载HTML文件并开始解析DOM</li>
+<li>遇到link[rel=stylesheet]的时候，将其加入资源下载队列，继续解析dom（css没有阻塞dom解析）</li>
+<li>当遇到script的时候，之后有三种情况：<ol>
+<li>如果之前的stylesheet没有下载解析完毕，阻塞dom，并行下载js，等待下载解析(关于解析这块我没有弄懂，解析应该是构成css规则树，但是是否参考dom树来完成还是单独完成，这一块没有弄明白)完毕再执行代码。（此时会阻塞dom的解析,css阻塞了js，进而阻塞了dom解析）</li>
+<li>如果没有未下载完成的css，下载script,下载完毕之后立即执行代码。（这中间的过程包括下载和执行都会阻塞dom解析,js阻塞了dom）</li>
+<li>script有defer,async标签，下载好之后立即执行（两者下载均不会阻塞dom的解析，defer会在DOMContentLoaded事件之前按照顺序执行，async下载完毕直接执行，两者的执行都会阻塞dom解析，不过defer执行的时候dom的解析就只剩下执行这个script了），执行完之后继续解析dom。关于defer和async，下一节的截图。</li>
 </ol>
-<pre><code class="js">Promise
-  .resolve(2)
-  .then(x =&gt; x * 7)
-  .then(x =&gt; x - 3)
-  .then(x =&gt; console.log(x))
-// &lt;- 11
-</code></pre>
+</li>
+<li>整个dom解析完成，触发DOMContentLoaded。</li>
+<li>css下载完毕（有可能在4之前，如果在4之前则进行等待dom解析，如果没有下载完毕，即便dom树已经构建完成，chrome是不会展示页面的，因为render tree没有构建，无法paint），渲染，展示页面（这个就是一般访问国外网站很久都是一片空白的原因，css阻塞了渲染）</li>
+<li>等待图片等别的类似资源加载完毕，触发onload事件</li>
+</ol>
+<h2 id="关于defer和async"><a href="#关于defer和async" class="headerlink" title="关于defer和async"></a>关于defer和async</h2><p>defer async两者都是使得js的下载不会阻塞dom解析。之所以普通的script的下载会阻塞dom解析，是因为script有可能会改变dom，如果在下载的时候还去解析dom，那下载之后再执行script又改变dom就是一种浪费了，所以浏览器在下载script的时候就阻塞了dom解析。关于defer和async，我觉得下面两幅图就够了。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3967512-8c57e8c6ad5bca11.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="deferasync区别.jpg"></p>
+<p>关于执行的顺序，这个图说的很明白：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3967512-df26d394fc05f6dc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="righttime.jpg"></p>
+<p>上图没有说的是defer会在DOMContentLoaded事件之前按照顺序执行（多个defer定义的script标签），别的都比较明了了，我就不多说了</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>css是并行下载，决定了css规则树，render tree的构建，这个如果没有构建好，即便dom解析完毕，也是空白。它并不会直接阻塞dom解析，但是html5规定，如果script标签（非defer,async）前面的css没有下载解析完成，就会等待其完成再执行（可以提前下载）。所以css有可能会间接阻塞dom解析。</li>
+<li>js阻塞dom解析，下载以及执行的时候也会停止dom解析，当所有的js加载完毕，dom解析完毕，触发DOMContentLoaded事件，也就是jquery的$().ready事件</li>
+<li>js可以通过设置defer,async来异步加载。</li>
+<li>当所有的资源，比如图片,audio等加载完毕会触发window.onload事件</li>
+</ol>
+<p>初次对浏览器的加载深入研究，说的不对的地方还请指出！</p>
+<p>##　参考文章</p>
 <ol>
-<li>当返回值是一个Promise的对象的时候，会等待其中的resolve或者reject函数执行。</li>
+<li><a href="http://harttle.com/2016/05/14/binding-document-ready-event.html" target="_blank" rel="external">兼容所有浏览器的DOM载入事件</a></li>
+<li><a href="http://harttle.com/2016/05/15/stylesheet-delay-domcontentloaded.html" target="_blank" rel="external">css载入与DOMContentLoaded事件延迟</a></li>
+<li><a href="http://harttle.com/2016/05/18/async-javascript-loading.html" target="_blank" rel="external">异步脚本载入提高页面性能</a></li>
+<li><a href="http://www.tuicool.com/articles/7v2IJ37" target="_blank" rel="external">css/js对DOM渲染的影响</a></li>
+<li><a href="http://coolshell.cn/articles/9666.html" target="_blank" rel="external">浏览器的渲染原理简介</a></li>
+<li><a href="http://coolshell.cn/articles/9749.html" target="_blank" rel="external">javascript的装载与执行</a></li>
 </ol>
-<pre><code class="js">Promise
-  .resolve(2)
-  .then(x =&gt; new Promise(function (resolve) {
-    setTimeout(() =&gt; resolve(x * 1000), x * 1000)
-  }))
-  .then(x =&gt; console.log(x))
-// &lt;- 2000
-</code></pre>
-<p>上述函数的第二个返回值是是一个promise对象，2s之后会执行resolve函数，返回值是2000，所以继续执行then，输出2000.</p>
-<ol>
-<li>返回值(英文是reaction，类似于一个动作的反应，我感觉转换成程序语言，就是返回值的意思)是一个err，就会执行catch函数，而then函数不会被执行。</li>
-</ol>
-<pre><code class="js">Promise.resolve(new Error(&#39;failed&#39;))
-  .then(()=&gt;{throw new Error(&#39;failed&#39;)})
-.then(null,data=&gt;console.log(data));
-</code></pre>
-<p><strong>关于then,catch,resolve,reject的一些实例解释</strong></p>
-<pre><code class="js">//实例1，通过new新建Promise，在resolver中，执行reject函数并reaction一个错误，
-//所以接下来会执行catch函数，data=上一步中的返回值（reaction）
-//也就是new Error(&#39;oops&#39;)
-new Promise((resolve, reject) =&gt; reject(new Error(&#39;oops&#39;)))
-  .catch(err =&gt; console.error(err))
-//这段代码实现了和实例1一样的功能，也就是说，在resolver中执行throw，
-//抛出一个错误，也会导致程序直接执行接下来的catch函数，与reject(&#39;返回值&#39;)的效果相同
-new Promise((resolve, reject) =&gt; { throw new Error(&#39;oops&#39;); })
-  .catch(err =&gt; console.error(err))  
-
-//这段代码在then函数中抛出了一个错误，所以会在下一步执行catch函数
-  Promise
-    .resolve(2)
-    .then(x =&gt; { throw new Error(&#39;failed&#39;); })
-    .catch(err =&gt; console.error(err))
-</code></pre>
-<h4 id="promise-all和race"><a href="#promise-all和race" class="headerlink" title="promise.all和race"></a>promise.all和race</h4><p>The Promise.all method takes an array of promises and returns a single promise p. When all promises passed to Promise.all are fulfilled, p becomes fulfilled as well with an array of results sorted according to the provided promises. If a single promise becomes rejected, p settles with its rejection reason immediately.<br>promise.all的参数是一系列的promise数组，返回值是一个promise，当所有的promise完成了，然后他们的返回值会存储在一个数组中，顺序就是放入promise.all中的顺序，相反，如果其中一个错误，p就会立刻返回错误。</p>
-<pre><code class="js">Promise
-  .all([
-    Promise.resolve(12),
-    Promise.resolve(10),
-  ])
-  .then(products =&gt; console.log(products[0], products[1]))
-</code></pre>
-<p>这样的好处就是可以在好几个promise完成之后再一同处理数据。<br>所以，promise.all的输出值有三种情况：</p>
-<ol>
-<li>输出里面promise的返回值</li>
-<li>输出一个单独的错误</li>
-<li>停留在pending的状态，因为其中有至少一个没有执行。</li>
-</ol>
-<p>promise.race与all很相似，只是第一个结束的promise会直接输出，也就是说，返回值就是第一个promise完成的返回值，如果出错，也是返回第一个错误，之后的不会执行。所以叫race</p>
-<pre><code class="js">Promise
-  .race([
-    new Promise(resolve =&gt; setTimeout(() =&gt; resolve(1), 1000)),
-    new Promise(resolve =&gt; setTimeout(() =&gt; resolve(2), 2000))
-  ])
-  .then(result =&gt; console.log(result))
-  // &lt;- 1
-</code></pre>
-<p>**补充：容易误会的一点，Promise.then.catch中的then,catch都是对上一个promise的处理，与Promise(f1,f2)，f1就是then,f2就是catch，这两者是等价的。</p>
 
         </section>
         <hr>
         
-          <p>上一篇：<a  href = "/2016/11/22/ajax本地通信/">ajax本地通信</a></p>
+          <p>上一篇：<a  href = "/2017/02/17/函数柯里化小结/">函数柯里化小结</a></p>
         
         
-          <p>下一篇：<a  href = /2016/11/23/es64/>es64</a></p>
+          <p>下一篇：<a onclick = 'return false'>没有了</a></p>
         
         
             <section id="comments">
             
                     <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="2016/11/22/es63/" data-title="es6笔记三" data-url="https://yuzai.github.io/2016/11/22/es63/"></div>
+<div class="ds-thread" data-thread-key="2017/02/21/DOM阻塞总结/" data-title="DOM阻塞总结" data-url="https://yuzai.github.io/2017/02/21/DOM阻塞总结/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -223,8 +143,8 @@ new Promise((resolve, reject) =&gt; { throw new Error(&#39;oops&#39;); })
 <div class = 'well' id = 'ab_ca'>
 
 
-<h4>es6笔记三</h4>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#promise"><span class="toc-text">promise</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#promise的创建方法"><span class="toc-text">promise的创建方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#then，catch函数的返回值"><span class="toc-text">then，catch函数的返回值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#promise-all和race"><span class="toc-text">promise.all和race</span></a></li></ol></li></ol>
+<h4>DOM阻塞总结</h4>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器解析html机制"><span class="toc-text">浏览器解析html机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于defer和async"><span class="toc-text">关于defer和async</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
 <h4>归档</h4>
 <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li></ul>
 <h4>最新文章</h4>
