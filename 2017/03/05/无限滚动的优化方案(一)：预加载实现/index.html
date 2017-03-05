@@ -57,27 +57,94 @@
         <div class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1 category_col'>
           <div class ='well'>
         <h1 class='post-title'>
-            <span>hexo主题制作（1）：关于hexo的一点疑问</span>
+            <span>无限滚动的优化方案(一)：预加载实现</span>
         </h1>
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo主题制作/">hexo主题制作</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
         <section class='post-content'>
-            <p>hexo变量的作用域<br>问题：page变量在archive.ejs和post.ejs中的含义不同，不好在post页面访问整个博客的所有文章列表<br><a id="more"></a><br>根据手册，archive.ejs中的page表示的是所有的文章，也就是page.posts的元素就是每一篇文章。而在post.ejs中，也就是访问:year/:month…某篇文章时，page变量就是archive.ejs中的page.posts中对应于该文章的变量。<br>我希望实现的功能是在post.ejs中，也就是展示每篇文章的页面时，左侧显示文章，右侧显示toc,同时toc下面显示我发表过的文章。但是在post.ejs中并不能访问archive中page.posts变量，在post.ejs中，page就表示当前页面，page(in post.ejs)=page.post[index] (in archive.ejs)。所以不能访问到整个的博客文章变量，不好将其显示出来。</p>
-<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>变量是内部定义好的，框架这样安排是有它的道理的，这样，在post中可以很方便的处理当前文章的内容，而在archive中，可以直接对所有的文章进行相应的处理。在性能上应该有不少提升，很想知道内部的实现原理。不过要看源码了。暂时还是把自己的博客主题做好，不容易啊。</p>
-<h3 id="暂时的解决方案"><a href="#暂时的解决方案" class="headerlink" title="暂时的解决方案"></a>暂时的解决方案</h3><p>hexo提供的辅助函数（helpers）可以解决这个问题<br><code>&lt;%- list_archives([options]) %&gt;</code><br>  可以显示当前的列表，具体的参数设置可以查看手册<br>  <code>&lt;%- list_posts([options]) %&gt;</code>可以显示所有的文章，具体有个格式，索然可以通过更改options获得自己想要的格式，不过获取这个格式之后，可以自己添加js,css来实现想要的渲染效果。</p>
+            <p>最近看了很多关于无限滚动的文章，也在面试中被问到了，优化方案很多，本次针对其中一条优化方案做了一个实际的优化：预加载。<br><a id="more"></a></p>
+<h2 id="实例简介"><a href="#实例简介" class="headerlink" title="实例简介"></a>实例简介</h2><p>之前一直对单页应用有兴趣，所以自己写了一个前端路由，相关的文章见<a href="http://www.jianshu.com/p/5a5813648d87" target="_blank" rel="external">这里</a>，这个单页应用采取hash的方式实现路由。最终的实例页面见<a href="http://blog.xiaoboma.com/dazhequan2/" target="_blank" rel="external">这里</a>。仓库在<a href="https://github.com/yuzai/dazhequan2" target="_blank" rel="external">这里</a>是一个经典的单页应用。要做优化的就是主页的信息滚动。这些信息通过ajax从服务器端获取，这里为了方便，服务器端会一直返回数据，哪怕是重复的。<br>页面如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3967512-6873e811ea7eb32b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<h2 id="预加载原理"><a href="#预加载原理" class="headerlink" title="预加载原理"></a>预加载原理</h2><p>正常情况下我的一个ajax请求服务器端会返回最多10条信息，当用户滑动到页面底部，就会触发ajax请求，发送一条新的请求来获取信息。但是这样造成了用户的等待，但是如果用户空闲，就进行ajax的发送也是不行的，这个浪费了用户的流量。<br>需要采用一种检测手段，检测用户会不会继续往下看，如果会，就进行预加载，不必等到用户翻到最底部。这样可以最大程度的优化用户的体验</p>
+<h2 id="预加载实现"><a href="#预加载实现" class="headerlink" title="预加载实现"></a>预加载实现</h2><h3 id="剩余内容的高度检测"><a href="#剩余内容的高度检测" class="headerlink" title="剩余内容的高度检测"></a>剩余内容的高度检测</h3><p>理解了原理，其实预加载的核心，就是进行一个即将滚动到底部的一个检测。这里需要用到一些高度，我采用的是</p>
+<ol>
+<li>document.body.scrollTop：这个高度是指浏览器滚动的高度</li>
+<li>document.body.clientHeight：这个是用户视窗的高度</li>
+<li>document.body.offsetHeight：这个是body的高度，也就是整个文档的实际高度。<br>这三个高度，前两个加起来就是用户已经翻看的高度，通过与整个文档的高度的对比就能检测到剩余文档的高度，只要这个高度小于阈值(OFFSET)，就进行ajax请求的发送，从而实现预加载</li>
+</ol>
+<pre><code class="js">var body = document.body;
+var height = body.offsetHeight-（body.scrollTop+body.clientHeight）;
+if(height&lt;OFFSET){
+    //浏览器快滚动到底部了
+}
+</code></pre>
+<h3 id="scroll事件反复执行带来的性能问题"><a href="#scroll事件反复执行带来的性能问题" class="headerlink" title="scroll事件反复执行带来的性能问题"></a>scroll事件反复执行带来的性能问题</h3><p>上述函数可以直接和scroll事件进行绑定，但是这样直接绑定会造成一些不好的影响:</p>
+<ol>
+<li>scroll的反复执行降低了页面的流畅度</li>
+<li>当达到目标高度之后，每一次的滚动都符合预加载的要求，所以轻微滚动都会触发n次的预加载请求。</li>
+</ol>
+<h3 id="scroll事件优化方案"><a href="#scroll事件优化方案" class="headerlink" title="scroll事件优化方案"></a>scroll事件优化方案</h3><p>针对上述第一个问题，可以采用函数节流的方式进行优化，但是要注意，最后一次用户的滚动必须执行，因为有可能最后一次滚动进入了阈值，此时必须尽快执行预加载请求。关于节流的原理网上描述的比较多，此处给一个我实现的包装代码：</p>
+<pre><code class="js">method.throttling2 = function(func,delay){
+  var inthrott = false;//节流
+  var timer;//保证最后一次执行
+  return function(){
+    var self = this;
+    var args = arguments;//保留上下文
+    if(!inthrott){//判断上一次是否执行完毕
+      func.apply(self,args);
+      inthrott = true;
+      setTimeout(function(){
+        inthrott = false;
+      },delay);
+    }else {
+      clearTimeout(timer);
+      timer = setTimeout(function(){
+        func.apply(self,args);
+        inthrott = false;
+      },500);//此处500可以进行加快，主要是希望能够尽快的执行最后一次
+    }
+  }
+}
+</code></pre>
+<p>而要解决第二个问题，就必须要保证上一次ajax请求没有结束之前，不会进行下一次ajax请求。这个其实通过一个标识符就可以解决，默认情况下是true,当ajax请求发送开始，修改为false,此时高度的改变会触发scroll函数，但是函数内部会判断这个标识符，如果为false，就不会进行高度的检测以及下一个ajax请求的发送。而当ajax请求结束后，标志位回归true，从而用户的滚动就可以触发下次的预加载了。</p>
+<p>最后的代码大概像这样：</p>
+<pre><code class="js">//method是我定义的一些公共方法
+method.addevent(window,&#39;scroll&#39;,method.throttling2(scrollTop,1000))//绑定scroll函数，通过之前的节流函数对原函数进行包装
+
+//高度检测函数，通过节流之后绑定在了scroll事件上
+function scrollTop(){
+  var height1 = document.body.scrollTop+document.body.clientHeight;
+  var height2 = document.body.offsetHeight;
+  if(state){//检测标识变量
+      if(height2 - height1 &lt; eleheight*3){
+        console.log(&#39;到达预加载阈值，开始预加载&#39;);
+        getInfo();
+      }
+  }
+}
+//包装ajax请求，加上标识变量
+function getInfo(){
+  //从服务器端获取商家发布的新信息
+  state = false;
+  //发送实际的ajax请求
+    {state = true;}//此语句写入ajax的回调
+}
+</code></pre>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>目前我在预加载的时候会进行一个输出，方便我的观察以及调试。最后大概用户距离底部300px左右的时候，会触发预加载，此时，用户的任何滚动先经过节流，然后再进行标识的检测，不会出现两次预加载同时出现的情况。达到了我预期的目标。</p>
+<h2 id="展望"><a href="#展望" class="headerlink" title="展望"></a>展望</h2><p>我认为，现实中还有可能出现一种极端情况：就是用户不断的下滑，在查找之前的一条历史消息，此时，因为我的预加载的阻拦，其实在一定程度上限制了用户的滑动（每次只能同时进行一个ajax请求），这里应该有优化的空间，可以通过检测是否出现在可视区域来进行加载。<br>另外一个可以优化的点在于图片，如果我的作品里面不是框，而是图片，预加载的效果就不太好，需要图片的懒加载，也就是用户可视范围内才进行图片的加载。还有待后续进行改进</p>
 
         </section>
         <hr>
         
-          <p>上一篇：<a onclick = 'return false'>没有了</a></p>
+          <p>上一篇：<a  href = "/2017/02/22/函数作用域以及执行上下文小结/">函数作用域及执行上下文小结</a></p>
         
         
-          <p>下一篇：<a  href = /2016/09/28/hexo主题制作（2）：进展/>hexo主题制作（2）：进展</a></p>
+          <p>下一篇：<a onclick = 'return false'>没有了</a></p>
         
         
             <section id="comments">
             
                     <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="2016/09/28/hexo主题制作（1）：关于hexo的一点疑问/" data-title="hexo主题制作（1）：关于hexo的一点疑问" data-url="https://yuzai.github.io/2016/09/28/hexo主题制作（1）：关于hexo的一点疑问/"></div>
+<div class="ds-thread" data-thread-key="2017/03/05/无限滚动的优化方案(一)：预加载实现/" data-title="无限滚动的优化方案(一)：预加载实现" data-url="https://yuzai.github.io/2017/03/05/无限滚动的优化方案(一)：预加载实现/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -103,8 +170,8 @@
 <div class = 'well' id = 'ab_ca'>
 
 
-<h4>hexo主题制作（1）：关于hexo的一点疑问</h4>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#思考"><span class="toc-text">思考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#暂时的解决方案"><span class="toc-text">暂时的解决方案</span></a></li></ol>
+<h4>无限滚动的优化方案(一)：预加载实现</h4>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#实例简介"><span class="toc-text">实例简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#预加载原理"><span class="toc-text">预加载原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#预加载实现"><span class="toc-text">预加载实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#剩余内容的高度检测"><span class="toc-text">剩余内容的高度检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scroll事件反复执行带来的性能问题"><span class="toc-text">scroll事件反复执行带来的性能问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scroll事件优化方案"><span class="toc-text">scroll事件优化方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#展望"><span class="toc-text">展望</span></a></li></ol>
 <h4>归档</h4>
 <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li></ul>
 <h4>最新文章</h4>
