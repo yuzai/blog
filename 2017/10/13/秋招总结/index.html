@@ -57,44 +57,39 @@
         <div class = 'col-xs-12 col-xs-offset-0 col-md-7 col-md-offset-1 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1 category_col'>
           <div class ='well'>
         <h1 class='post-title'>
-            <span>arrow的疑问</span>
+            <span>秋招记录</span>
         </h1>
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/">es6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/疑问/">疑问</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面试/">面试</a></li></ul>
         <section class='post-content'>
-            <p>学会使用es6的箭头函数之后，在几乎所有需要用到匿名函数的地方都改为了箭头函数，this绑定外部函数的this无往不利，但是最近遇到了一个问题。<br><a id="more"></a></p>
-<p>对象的方法定义时，箭头函数的this值应该是什么？</p>
-<pre><code class="js">//code1
-var s={
-}
-s.fun=()=&gt;{console.log(this)} //严格模式下undefined，浏览器控制台输出window
-//s.fun=function(){console.log(this)}//[object:s]
-s.fun();
-//code2
-var s={
-  fun:()=&gt;console.log(this)//严格模式下undefined，浏览器控制台输出window
-  //fun:function(){console.log(this)}//[object:s]
-}
-s.fun();
-</code></pre>
-<p>上述代码表示，在定义对象的方法时，使用箭头函数，this没有绑定(严格模式下undefined，非严格模式时是window).<br>翻看了箭头函数的说明，对this的说明是，this会继承外部的this，也就是 <strong>如果在函数内部定义了箭头函数，箭头函数的this值是等于该函数的this值，而在定义对象的时候，外部的函数并不存在，它的外部就是全局，所以this会指向window或者undefined。</strong></p>
-<blockquote>
-<p>知识欠缺太多了，还需继续努力</p>
-</blockquote>
-<p>欢迎批评指正</p>
+            <p>10.13，终于可以结束秋招了，学到了很多，也认识了很多童鞋及面试官，很感谢自己，坚持到现在，写一篇文章，纪念拼搏的自己。<br><a id="more"></a></p>
+<h3 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h3><p>本科在南京邮电大学电子科学与技术专业，一直从事单片机、fpga开发，毕业顺利拿到了华为硬件工程师offer，同时也有保研资格，选择了保研，西安电子科技大学，通信与信息系统，实验室比较轻松，自学，在研一下学期接触到了前端，从此入坑不解释。在研二春招的时候拿到了腾讯mig、去哪儿、阿里替补offer，于5月份去腾讯进行为期三个月的实习。</p>
+<h3 id="我的秋招"><a href="#我的秋招" class="headerlink" title="我的秋招"></a>我的秋招</h3><p>8.17进行转正答辩，之后一周之内就得到导师的答复，通过了。恩，可以结束秋招了。但是女朋友在8.29的网易内推批次拿到了杭州杭研的offer，说实话没想到女朋友这么6，没办法，不忍心让女朋友放弃这么好的机会，我放弃。从9.5正式开始寻找杭州的工作，锁定目标：阿里、网易校招、有赞、51nb、挖财、新华三、同花顺、贝贝网。</p>
+<ol>
+<li>阿里校招笔试之后无消息。</li>
+<li>网易校招9.15笔试，9月中下旬面试，三面无大问题，莫名挂</li>
+<li>有赞，8月底内推，9月中旬两次电话面，10.12三面tl，10.13hr，offer</li>
+<li>51nb，9月底笔试加电话2面+现场2面+电话cto面，10.10，sp offer</li>
+<li>挖财，10月笔试，百度了一下和51进行了对比，放弃</li>
+<li>新华三，10月中旬，不考虑</li>
+<li>同花顺，面试时间和51nb冲突，放弃</li>
+<li>贝贝，面试时间和51nb冲突，放弃</li>
+</ol>
+<p>在比较早的时候投递了链家，与9月中旬与女朋友一起面试，双双9.30拿到白菜offer，很感谢链家，在知道我们去的概率比较小的情况下还是给了offer，面试官人很好，体验最好没有之一。</p>
+<h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p>一路走来，很感谢女朋友，一直也在找深圳的工作，跟着我到了10月9号才放松下来；<br>感谢51nb，在知道我手上没有一个offer的情况下，依旧给了我sp；链家，在面试中学到了很多，也在国庆节前吃了一个定心丸，很感谢能够在知道我们去的概率小的情况下给了offer。当然，也要感谢自己，能坚持到最后！<br>严峻的发现，自己的文笔真心不是一般的差，还得再练练感觉。</p>
 
         </section>
         <hr>
         
-          <p>上一篇：<a  href = "/2016/11/23/es64/">es64</a></p>
+          <p>上一篇：<a  href = "/2017/04/06/原生js封装一个下拉加载的小组件/">原生js封装一个下拉加载的小组件</a></p>
         
         
-          <p>下一篇：<a  href = /2016/11/23/es65/>es5-generator</a></p>
+          <p>下一篇：<a onclick = 'return false'>没有了</a></p>
         
         
             <section id="comments">
             
                     <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="2016/11/23/arror/" data-title="arrow的疑问" data-url="https://yuzai.github.io/2016/11/23/arror/"></div>
+<div class="ds-thread" data-thread-key="2017/10/13/秋招总结/" data-title="秋招记录" data-url="https://yuzai.github.io/2017/10/13/秋招总结/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -120,8 +115,8 @@ s.fun();
 <div class = 'well' id = 'ab_ca'>
 
 
-<h4>arrow的疑问</h4>
-
+<h4>秋招记录</h4>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#个人简介"><span class="toc-text">个人简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#我的秋招"><span class="toc-text">我的秋招</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#感谢"><span class="toc-text">感谢</span></a></li></ol>
 <h4>归档</h4>
 <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li></ul>
 <h4>最新文章</h4>
