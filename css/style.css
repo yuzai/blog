@@ -271,3 +271,7 @@ pre{
 pre code{
 	white-space: pre;
 }
+h6.date{
+  float:right;
+  margin-top:0;
+}
