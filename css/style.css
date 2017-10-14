@@ -1,11 +1,3 @@
-@font-face{
-	font-family: mySecFont;
-	src:url(/fonts/Sansation_Regular.ttf);
-}
-@font-face{
-	font-family: myFirstFont;
-	src:url(/fonts/Artifika-Regular.ttf);
-}
 body { padding-top: 70px; }
 .canvas{
   position:absolute;
@@ -149,7 +141,7 @@ header:hover{
   opacity: 1;
 }
 .main{
-  font-family: myFirstFont,DFKai-SB;
+  font-family: DFKai-SB;
 }
 #ab_ca{
   overflow:auto;
